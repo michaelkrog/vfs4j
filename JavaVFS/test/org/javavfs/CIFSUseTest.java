@@ -29,10 +29,12 @@ import static org.junit.Assert.*;
  */
 public class CIFSUseTest extends AbstractUseTest{
 
-    public CIFSUseTest() throws MalformedURLException, SmbException {
-        super(new CifsFileSystem("smb://mzk:Kodeord08@mzk-laptop/datatest/"));
+    public CIFSUseTest() throws MalformedURLException, IOException {
+        super(CIFSUtil.getFileSystem());
     }
 
+
+    
     @BeforeClass
     public static void setUpClass() throws Exception {
 

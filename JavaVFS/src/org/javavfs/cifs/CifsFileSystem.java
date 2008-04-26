@@ -22,7 +22,7 @@ import org.javavfs.FileSystem;
 public class CifsFileSystem implements FileSystem {
 
     public CifsFileSystem(String server, String share) throws MalformedURLException, SmbException {
-        this("smb://"+server+"/"+share);
+        this("smb://"+server+"/"+share+"/");
     }
     
     public CifsFileSystem(String url) throws MalformedURLException, SmbException {
@@ -52,7 +52,7 @@ public class CifsFileSystem implements FileSystem {
         return infomap;
     }
 
-    public String[] getWorkgroups() throws IOException{
+    public static String[] getWorkgroups() throws IOException{
         try {
             SmbFile file = new SmbFile("smb://");
             return file.list();
@@ -62,7 +62,7 @@ public class CifsFileSystem implements FileSystem {
         
     }
     
-    public String[] getServers(String workgroup) throws IOException{
+    public static String[] getServers(String workgroup) throws IOException{
         try {
             SmbFile file = new SmbFile("smb://"+workgroup);
             return file.list();
@@ -71,7 +71,7 @@ public class CifsFileSystem implements FileSystem {
         }
     }
     
-    public String[] getShares(String server) throws IOException{
+    public static String[] getShares(String server) throws IOException{
         try {
             SmbFile file = new SmbFile("smb://"+server);
             return file.list();
