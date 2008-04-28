@@ -35,6 +35,9 @@ public class CifsFileSystem implements FileSystem {
         infomap.put(FileSystem.FSInfo_Name, "CIFS");
         infomap.put(FileSystem.FSInfo_Description, "A filesystem based upon samba share using the JCIFS package.");
         infomap.put(FileSystem.FSInfo_Version, "0.1.0");
+        infomap.put(FileSystem.FSInfo_HasFreeSpaceInformation, "true");
+        infomap.put(FileSystem.FSInfo_HasSizeInformation, "false");
+        
     }
 
     CifsDirectory root;
@@ -77,6 +80,18 @@ public class CifsFileSystem implements FileSystem {
             return file.list();
         } catch(MalformedURLException ex){
             throw new IOException("Unable to liste shares. "+ex.getMessage());
+        }
+    }
+
+    public long getSize() {
+        return -1;
+    }
+
+    public long getFreeSpace() {
+        try{
+            return root.innerFile.getDiskFreeSpace();
+        } catch(SmbException ex){
+            return -1;
         }
     }
 }

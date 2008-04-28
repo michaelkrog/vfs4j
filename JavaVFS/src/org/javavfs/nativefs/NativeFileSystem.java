@@ -28,6 +28,10 @@ public class NativeFileSystem implements FileSystem{
         infomap.put(FileSystem.FSInfo_Description, "A filesystem based upon native files via the java.io package.");
         infomap.put(FileSystem.FSInfo_Version, "0.1.0");
         
+        //Java version < 1.6
+        infomap.put(FileSystem.FSInfo_HasFreeSpaceInformation, "false");
+        infomap.put(FileSystem.FSInfo_HasSizeInformation, "false");
+        
         
         root = new File(uri);
         if(!root.exists() || !root.isDirectory())
@@ -47,6 +51,22 @@ public class NativeFileSystem implements FileSystem{
 
     public Map getInfo() {
         return infomap;
+    }
+
+    public long getSize() {
+        //Java version < 1.6
+        return -1;
+        
+        //Java version 1.6+
+        //return root.innerFile.getTotalSpace();
+    }
+
+    public long getFreeSpace() {
+        //Java version < 1.6
+        return -1;
+        
+        //Java version 1.6+
+        //return root.innerFile.getFreeSpace();
     }
 
 }

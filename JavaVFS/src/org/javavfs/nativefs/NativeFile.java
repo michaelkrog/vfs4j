@@ -54,6 +54,7 @@ public class NativeFile extends NativeNode implements File{
 
     public long getLength() {
         return file.length();
+        
     }
 
     
