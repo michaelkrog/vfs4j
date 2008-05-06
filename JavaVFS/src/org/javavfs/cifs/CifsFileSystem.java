@@ -27,7 +27,12 @@ public class CifsFileSystem implements FileSystem {
     
     public CifsFileSystem(String url) throws MalformedURLException, SmbException {
         SmbFile smbfile = new SmbFile(url);
-        if(smbfile.getType()!=SmbFile.TYPE_SHARE && (smbfile.getType()!=SmbFile.TYPE_FILESYSTEM || smbfile.isDirectory()))
+        
+        /*int type = smbfile.getType();
+        type = SmbFile.TYPE_SHARE;
+        type = SmbFile.TYPE_FILESYSTEM;*/
+        
+        if(smbfile.getType()!=SmbFile.TYPE_SHARE && (smbfile.getType()!=SmbFile.TYPE_FILESYSTEM || !smbfile.isDirectory()))
                 throw new MalformedURLException("The URL syntax was OK, but it must point to a share or a directory.");
         root = new CifsDirectory(this, smbfile);
     

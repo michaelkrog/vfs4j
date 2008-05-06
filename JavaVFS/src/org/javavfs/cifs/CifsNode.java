@@ -166,4 +166,10 @@ public abstract class CifsNode implements Node {
         return compareTo((Node)arg0);
     }
 
+    public String getPath() {
+        return innerFile.getPath();
+    }
+    
+    
+
 }

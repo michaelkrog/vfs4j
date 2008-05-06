@@ -98,4 +98,6 @@ public interface Node extends Comparable {
     
     public boolean equals(Node node);
     
+    public String getPath();
+    
 }

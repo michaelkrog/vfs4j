@@ -153,6 +153,11 @@ public abstract class NativeNode implements Node{
         }
         return false;
     }
-        
+
+    public String getPath() {
+        return this.file.getPath();
+    }
+
+    
 
 }
