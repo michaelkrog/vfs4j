@@ -154,14 +154,17 @@ public class NativeDirectory extends NativeNode implements Directory{
     }
 
     public Node getChild(String name) throws FileNotFoundException {
+        Node node;
         java.io.File file = new java.io.File(super.file,name);
         if(!file.exists())
             throw new FileNotFoundException("The file does not exist. [uri="+file.toURI()+"]");
         
         if(file.isDirectory())
-            return new NativeDirectory(filesystem, file);
+            node = new NativeDirectory(filesystem, file);
         else
-            return new NativeFile(filesystem, file);
+            node = new NativeFile(filesystem, file);
+            
+        return node;
     }
 
     public File getFile(String name) throws FileNotFoundException {

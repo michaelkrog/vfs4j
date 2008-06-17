@@ -8,10 +8,14 @@ package org.javavfs.nativefs;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URI;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 import org.javavfs.Directory;
 import org.javavfs.FileSystem;
+import org.javavfs.Node;
+import org.javavfs.security.NoSecurity;
+import org.javavfs.security.Security;
 
 /**
  *
@@ -40,6 +44,7 @@ public class NativeFileSystem implements FileSystem{
 
     File root;
     HashMap infomap = new HashMap();
+    Security security = new NoSecurity();
     
     public String getName() {
         return "NativeFS("+root.toURI()+")";
@@ -67,6 +72,14 @@ public class NativeFileSystem implements FileSystem{
         
         //Java version 1.6+
         //return root.innerFile.getFreeSpace();
+    }
+
+    public Security getSecurity() {
+        return security;
+    }
+
+    public void setSecurity(Security security) {
+        this.security=security;
     }
 
 }

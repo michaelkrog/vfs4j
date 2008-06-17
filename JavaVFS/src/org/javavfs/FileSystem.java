@@ -7,6 +7,7 @@ package org.javavfs;
 
 import java.io.FileNotFoundException;
 import java.util.Map;
+import org.javavfs.security.Security;
 
 /**
  *
@@ -51,4 +52,15 @@ public interface FileSystem {
      */
     public long getFreeSpace();
     
+    /**
+     * Retrieves the security used by the filesystem.
+     * @return The Security object.
+     */
+    public Security getSecurity();
+    
+    /**
+     * Sets the security object used by the filesystem.
+     * @param security The new security to use for the filesystem.
+     */
+    public void setSecurity(Security security);
 }
