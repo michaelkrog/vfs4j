@@ -36,6 +36,7 @@ public class NativeFile extends NativeNode implements File{
 
     public InputStream getInputStream() throws IOException {
         try {
+            filesystem.getSecurity().checkRead(this);
             return new FileInputStream(file);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(NativeFile.class.getName()).log(Level.SEVERE, null, ex);
@@ -45,6 +46,7 @@ public class NativeFile extends NativeNode implements File{
 
     public OutputStream getOutputStream() throws IOException {
         try {
+            filesystem.getSecurity().checkWrite(this);
             return new FileOutputStream(file);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(NativeFile.class.getName()).log(Level.SEVERE, null, ex);

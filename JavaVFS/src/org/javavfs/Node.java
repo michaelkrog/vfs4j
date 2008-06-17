@@ -100,4 +100,15 @@ public interface Node extends Comparable {
     
     public String getPath();
     
+    /**
+     * Retrieves information about wether access to read is allowed. It should also check via the native filesystem if possible.
+     * @return True/False
+     */
+    public boolean canRead();
+    
+    /**
+     * Retrieves information about wether access to read is allowed. It should also check via the native filesystem if possible.
+     * @return True/False
+     */
+    public boolean canWrite();
 }

@@ -36,6 +36,8 @@ public class NativeDirectory extends NativeNode implements Directory{
     }
 
     public Directory createDirectory(String name) throws IOException {
+        filesystem.getSecurity().checkWrite(this);
+            
         java.io.File newDir = new java.io.File(file,name);
         if(newDir.isFile())
             throw new IOException("A file with that name already exists. [uri="+newDir.toURI()+"]");
@@ -51,7 +53,8 @@ public class NativeDirectory extends NativeNode implements Directory{
     }
 
     public org.javavfs.File createFile(String name) throws IOException {
-        
+        filesystem.getSecurity().checkWrite(this);
+            
         java.io.File newFile = new java.io.File(file, name);
 
         boolean created = newFile.createNewFile();
@@ -75,6 +78,8 @@ public class NativeDirectory extends NativeNode implements Directory{
 
     public List<Node> getChildren(NodeFilter filter) 
     {
+        filesystem.getSecurity().checkRead(this);
+            
         java.io.File[] files = file.listFiles();
         ArrayList<Node> nodes = new ArrayList<Node>();
         
@@ -97,6 +102,8 @@ public class NativeDirectory extends NativeNode implements Directory{
     }
 
     public List<Directory> getDirectories(NodeFilter filter) {
+        filesystem.getSecurity().checkRead(this);
+            
         java.io.File[] files = file.listFiles();
         ArrayList<Directory> nodes = new ArrayList<Directory>();
         
@@ -118,6 +125,8 @@ public class NativeDirectory extends NativeNode implements Directory{
     }
 
     public List<File> getFiles(NodeFilter filter) {
+        filesystem.getSecurity().checkRead(this);
+            
         java.io.File[] files = file.listFiles();
         ArrayList<File> nodes = new ArrayList<File>();
         
@@ -139,21 +148,29 @@ public class NativeDirectory extends NativeNode implements Directory{
     }
 
     public boolean hasChild(String name) {
+        filesystem.getSecurity().checkRead(this);
+            
         java.io.File file = new java.io.File(this.file,name);
         return file.exists();
     }
 
     public boolean hasFile(String name) {
+        filesystem.getSecurity().checkRead(this);
+            
         java.io.File file = new java.io.File(this.file,name);
         return file.isFile();
     }
 
     public boolean hasDirectory(String name) {
+        filesystem.getSecurity().checkRead(this);
+            
         java.io.File file = new java.io.File(this.file,name);
         return file.isDirectory();
     }
 
     public Node getChild(String name) throws FileNotFoundException {
+        filesystem.getSecurity().checkRead(this);
+            
         Node node;
         java.io.File file = new java.io.File(super.file,name);
         if(!file.exists())

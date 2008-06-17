@@ -14,6 +14,7 @@ import jcifs.smb.SmbException;
 import jcifs.smb.SmbFile;
 import org.javavfs.Directory;
 import org.javavfs.FileSystem;
+import org.javavfs.security.Security;
 
 /**
  *
@@ -98,5 +99,13 @@ public class CifsFileSystem implements FileSystem {
         } catch(SmbException ex){
             return -1;
         }
+    }
+
+    public Security getSecurity() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void setSecurity(Security security) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

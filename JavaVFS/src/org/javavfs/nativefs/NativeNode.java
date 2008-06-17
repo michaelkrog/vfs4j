@@ -29,6 +29,8 @@ public abstract class NativeNode implements Node{
     protected java.io.File file;
 
     private void deleteNonRecursive(File file) throws IOException{
+        filesystem.getSecurity().checkWrite(this);
+        
         boolean deleted = file.delete();
         if(!deleted && file.isDirectory())
             throw new IOException("Could not delete directory. Maybe because it is not empty.[path="+file.toString()+"]");
@@ -73,6 +75,9 @@ public abstract class NativeNode implements Node{
     }
 
     public void moveTo(Directory newParent) throws IOException {
+        filesystem.getSecurity().checkWrite(this);
+        filesystem.getSecurity().checkWrite(newParent);
+        
         java.io.File newParentFile = new java.io.File(newParent.toUri());
         java.io.File newDestination = new java.io.File(newParentFile,file.getName());
         boolean moved = file.renameTo(newDestination);
@@ -81,6 +86,9 @@ public abstract class NativeNode implements Node{
     }
 
     public void moveTo(Directory newParent, String newName) throws IOException {
+        filesystem.getSecurity().checkWrite(this);
+        filesystem.getSecurity().checkWrite(newParent);
+        
         java.io.File newParentFile = new java.io.File(newParent.toUri());
         java.io.File newDestination = new java.io.File(newParentFile,newName);
         boolean moved = file.renameTo(newDestination);
@@ -89,6 +97,8 @@ public abstract class NativeNode implements Node{
     }
 
     public void setName(String name) throws IOException {
+        filesystem.getSecurity().checkWrite(this);
+        
         java.io.File newDestination = new java.io.File(file.getParentFile(),name);
         boolean moved = file.renameTo(newDestination);
         if(!moved)
@@ -122,6 +132,7 @@ public abstract class NativeNode implements Node{
     }
 
     public void setLastModified(Date date) {
+        filesystem.getSecurity().checkWrite(this);
         file.setLastModified(date.getTime());
     }
 
@@ -156,6 +167,14 @@ public abstract class NativeNode implements Node{
 
     public String getPath() {
         return this.file.getPath();
+    }
+
+    public boolean canRead() {
+        return filesystem.getSecurity().canRead(this) && file.canRead();
+    }
+
+    public boolean canWrite() {
+        return filesystem.getSecurity().canWrite(this) && file.canWrite();
     }
 
     

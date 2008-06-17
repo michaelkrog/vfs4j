@@ -5,14 +5,13 @@
 
 package org.javavfs.security;
 
-import java.security.Principal;
 import org.javavfs.Node;
 
 /**
  *
  * @author michael
  */
-public class NoSecurity implements Security{
+public class NoSecurity extends AbstractSecurity{
 
     public boolean canRead(Node node) {
         return true;
@@ -21,5 +20,9 @@ public class NoSecurity implements Security{
     public boolean canWrite(Node node) {
         return true;
     }
+
+    public void checkRead(Node node) {}
+
+    public void checkWrite(Node node) {}
 
 }

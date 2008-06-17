@@ -169,6 +169,14 @@ public abstract class CifsNode implements Node {
     public String getPath() {
         return innerFile.getPath();
     }
+
+    public boolean canRead() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public boolean canWrite() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
     
 
