@@ -6,23 +6,20 @@
 package org.javavfs.nativefs;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.net.URI;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
-import org.javavfs.Directory;
 import org.javavfs.FileSystem;
-import org.javavfs.Node;
+import org.javavfs.FileSystemSession;
 import org.javavfs.security.NoSecurity;
 import org.javavfs.security.Security;
 
 /**
  *
- * @author mzk
+ * @author michael
  */
-public class NativeFileSystem implements FileSystem{
-
+public class NativeFileSystem implements FileSystem {
     public NativeFileSystem(URI uri) throws IllegalArgumentException {
         if(!uri.getScheme().equals("file"))
             throw new IllegalArgumentException("Scheme not valid. Must be 'file' (fx: file:/mydir).");
@@ -41,37 +38,18 @@ public class NativeFileSystem implements FileSystem{
         if(!root.exists() || !root.isDirectory())
             throw new IllegalArgumentException("uri must point at a valid directory. [uri="+root.toString()+"]");
     }
-
+    
     File root;
     HashMap infomap = new HashMap();
     Security security = new NoSecurity();
+
+    public File getRoot() {
+        return root;
+    }
     
-    public String getName() {
-        return "NativeFS("+root.toURI()+")";
-    }
-
-    public Directory getRoot() throws FileNotFoundException {
-        return new NativeDirectory(this, root);
-    }
-
+    
     public Map getInfo() {
         return infomap;
-    }
-
-    public long getSize() {
-        //Java version < 1.6
-        return -1;
-        
-        //Java version 1.6+
-        //return root.innerFile.getTotalSpace();
-    }
-
-    public long getFreeSpace() {
-        //Java version < 1.6
-        return -1;
-        
-        //Java version 1.6+
-        //return root.innerFile.getFreeSpace();
     }
 
     public Security getSecurity() {
@@ -81,5 +59,17 @@ public class NativeFileSystem implements FileSystem{
     public void setSecurity(Security security) {
         this.security=security;
     }
+
+    public String getName() {
+        return "NativeFS("+root.toURI()+")";
+    }
+
+
+
+    public FileSystemSession createSession(Principal principal) {
+        return new NativeFileSystemSession(this, principal);
+    }
+
+    
 
 }

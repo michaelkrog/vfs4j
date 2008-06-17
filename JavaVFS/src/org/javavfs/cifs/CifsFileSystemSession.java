@@ -8,25 +8,27 @@ package org.javavfs.cifs;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 import jcifs.smb.SmbException;
 import jcifs.smb.SmbFile;
 import org.javavfs.Directory;
 import org.javavfs.FileSystem;
+import org.javavfs.FileSystemSession;
 import org.javavfs.security.Security;
 
 /**
  *
  * @author mzk
  */
-public class CifsFileSystem implements FileSystem {
+public class CifsFileSystemSession implements FileSystemSession {
 
-    public CifsFileSystem(String server, String share) throws MalformedURLException, SmbException {
+    public CifsFileSystemSession(String server, String share) throws MalformedURLException, SmbException {
         this("smb://"+server+"/"+share+"/");
     }
     
-    public CifsFileSystem(String url) throws MalformedURLException, SmbException {
+    public CifsFileSystemSession(String url) throws MalformedURLException, SmbException {
         SmbFile smbfile = new SmbFile(url);
         
         /*int type = smbfile.getType();
@@ -38,11 +40,11 @@ public class CifsFileSystem implements FileSystem {
         root = new CifsDirectory(this, smbfile);
     
         //Add info to infomap
-        infomap.put(FileSystem.FSInfo_Name, "CIFS");
-        infomap.put(FileSystem.FSInfo_Description, "A filesystem based upon samba share using the JCIFS package.");
-        infomap.put(FileSystem.FSInfo_Version, "0.1.0");
-        infomap.put(FileSystem.FSInfo_HasFreeSpaceInformation, "true");
-        infomap.put(FileSystem.FSInfo_HasSizeInformation, "false");
+        //infomap.put(FileSystemSession.FSInfo_Name, "CIFS");
+        //infomap.put(FileSystemSession.FSInfo_Description, "A filesystem based upon samba share using the JCIFS package.");
+        //infomap.put(FileSystemSession.FSInfo_Version, "0.1.0");
+        //infomap.put(FileSystemSession.FSInfo_HasFreeSpaceInformation, "true");
+        //infomap.put(FileSystemSession.FSInfo_HasSizeInformation, "false");
         
     }
 
@@ -106,6 +108,14 @@ public class CifsFileSystem implements FileSystem {
     }
 
     public void setSecurity(Security security) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public FileSystem getFileSystem() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Principal getPrincipal() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

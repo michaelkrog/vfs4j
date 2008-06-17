@@ -8,7 +8,7 @@ package org.javavfs.cifs;
 import jcifs.smb.SmbException;
 import jcifs.smb.SmbFile;
 import jcifs.smb.SmbFileFilter;
-import org.javavfs.FileSystem;
+import org.javavfs.FileSystemSession;
 import org.javavfs.Node;
 import org.javavfs.NodeFilter;
 
@@ -18,12 +18,12 @@ import org.javavfs.NodeFilter;
  */
 public class SmbFilterWrapper implements SmbFileFilter {
 
-    public SmbFilterWrapper(CifsFileSystem filesystem, NodeFilter filter) {
+    public SmbFilterWrapper(CifsFileSystemSession filesystem, NodeFilter filter) {
         this.filesystem=filesystem;
         this.filter=filter;
     }
 
-    CifsFileSystem filesystem;
+    CifsFileSystemSession filesystem;
     NodeFilter filter;
     
     public boolean accept(SmbFile file) throws SmbException {

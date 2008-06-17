@@ -55,7 +55,7 @@ public interface Node extends Comparable {
      * Retrieves the filesystem which this node belongs to.
      * @return The filesystem.
      */
-    public FileSystem getFileSystem();
+    public FileSystemSession getFileSystem();
     
     /**
      * Checks wether this node is a directory.
@@ -98,7 +98,7 @@ public interface Node extends Comparable {
     
     public boolean equals(Node node);
     
-    public String getPath();
+    public Path getPath();
     
     /**
      * Retrieves information about wether access to read is allowed. It should also check via the native filesystem if possible.

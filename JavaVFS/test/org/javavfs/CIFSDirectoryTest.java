@@ -7,7 +7,7 @@ package org.javavfs;
 
 import java.net.MalformedURLException;
 import jcifs.smb.SmbException;
-import org.javavfs.cifs.CifsFileSystem;
+import org.javavfs.cifs.CifsFileSystemSession;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -22,7 +22,8 @@ import static org.junit.Assert.*;
 public class CIFSDirectoryTest extends AbstractDirectoryTest {
 
     public CIFSDirectoryTest() throws MalformedURLException, SmbException {
-        super(new CifsFileSystem("smb://mzk:Kodeord08@mzk-laptop/datatest/"));
+        super(null);
+        //super(new CifsFileSystem("smb://mzk:Kodeord08@mzk-laptop/datatest/"));
     }
 
     @BeforeClass

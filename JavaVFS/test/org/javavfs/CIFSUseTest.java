@@ -14,8 +14,8 @@ import java.util.logging.Logger;
 import jcifs.smb.SmbException;
 import org.javavfs.Directory;
 import org.javavfs.File;
-import org.javavfs.FileSystem;
-import org.javavfs.cifs.CifsFileSystem;
+import org.javavfs.FileSystemSession;
+import org.javavfs.cifs.CifsFileSystemSession;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -30,7 +30,8 @@ import static org.junit.Assert.*;
 public class CIFSUseTest extends AbstractUseTest{
 
     public CIFSUseTest() throws MalformedURLException, IOException {
-        super(CIFSUtil.getFileSystem());
+        super(null);
+        //super(CIFSUtil.getFileSystem());
     }
 
 

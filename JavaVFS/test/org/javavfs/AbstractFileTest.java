@@ -15,7 +15,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
 import java.util.List;
-import org.javavfs.nativefs.NativeFileSystem;
+import org.javavfs.nativefs.NativeFileSystemSession;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -38,7 +38,7 @@ public class AbstractFileTest {
 
     
         private void clean() throws IOException{
-        List<Node> nodes = filesystem.getRoot().getChildren();
+        List<Node> nodes = filesystem.createSession(null).getRoot().getChildren();
         
         for(Node node:nodes){
             if(node.isDirectory()){
@@ -55,7 +55,7 @@ public class AbstractFileTest {
     @Test
     public void testGetInputStream() throws Exception {
         System.out.println("getInputStream");
-        Directory root = filesystem.getRoot();
+        Directory root = filesystem.createSession(null).getRoot();
         File tmp = root.getFile("tmp", true);
         
         int expResult = 123;
@@ -79,7 +79,7 @@ public class AbstractFileTest {
     @Test
     public void testGetLength() throws Exception {
         System.out.println("getLength");
-        Directory root = filesystem.getRoot();
+        Directory root = filesystem.createSession(null).getRoot();
         File tmp = root.getFile("tmp", true);
         
         long expResult = 3;

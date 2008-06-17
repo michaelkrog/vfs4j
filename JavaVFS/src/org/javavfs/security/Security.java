@@ -18,29 +18,28 @@ public interface Security {
      * @param node The node to retrieve the security information for.
      * @return True/False
      */
-    public boolean canRead(Node node);
+    public boolean canRead(Principal principal, Node node);
     
     /**
      * Retrieves information about wether the node can be written to/changed or not.
      * @param node The node to retrieve the security information for.
      * @return True/False
      */
-    public boolean canWrite(Node node);
+    public boolean canWrite(Principal principal, Node node);
     
     /**
      * Same as <code>canRead</code> but throws an exception if access is denied.
      * @param node The node to check for.
      */
-    public void checkRead(Node node);
+    public void checkRead(Principal principal, Node node);
     
     /**
      * Same as <code>canWrite</code> but throws an exception if access is denied.
      * @param node The node to check for.
      */
-    public void checkWrite(Node node);
+    public void checkWrite(Principal principal, Node node);
     
-    public Principal getPrincipal();
+    public Principal getPrincipal(String username, String password);
     
-    public void setPrincipal(Principal principal);
-    
+    public Principal getGuestPrincipal();
 }

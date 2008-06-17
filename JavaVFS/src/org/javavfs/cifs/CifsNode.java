@@ -15,8 +15,9 @@ import java.util.logging.Logger;
 import jcifs.smb.SmbException;
 import jcifs.smb.SmbFile;
 import org.javavfs.Directory;
-import org.javavfs.FileSystem;
+import org.javavfs.FileSystemSession;
 import org.javavfs.Node;
+import org.javavfs.Path;
 
 /**
  *
@@ -24,18 +25,18 @@ import org.javavfs.Node;
  */
 public abstract class CifsNode implements Node {
 
-    public CifsNode(CifsFileSystem filesystem, SmbFile file) {
+    public CifsNode(CifsFileSystemSession filesystem, SmbFile file) {
         this.filesystem=filesystem;
         innerFile=file;
     }
     
-    public CifsNode(CifsFileSystem filesystem, String url) throws MalformedURLException {
+    public CifsNode(CifsFileSystemSession filesystem, String url) throws MalformedURLException {
         this.filesystem=filesystem;
         innerFile=new SmbFile(url);
     }
     
     SmbFile innerFile;
-    CifsFileSystem filesystem;
+    CifsFileSystemSession filesystem;
     
     protected void deleteRecursive(SmbFile file) throws IOException{
         if(!file.exists())
@@ -100,7 +101,7 @@ public abstract class CifsNode implements Node {
         }
     }
 
-    public FileSystem getFileSystem() {
+    public FileSystemSession getFileSystem() {
         return filesystem;
     }
 
@@ -166,8 +167,8 @@ public abstract class CifsNode implements Node {
         return compareTo((Node)arg0);
     }
 
-    public String getPath() {
-        return innerFile.getPath();
+    public Path getPath() {
+        return new Path();
     }
 
     public boolean canRead() {
