@@ -39,4 +39,7 @@ public interface FileSystemSession {
     
     public Principal getPrincipal();
     
+    public Node getNode(String path) throws FileNotFoundException;
+    
+    
 }

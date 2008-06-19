@@ -16,6 +16,7 @@ import jcifs.smb.SmbFile;
 import org.javavfs.Directory;
 import org.javavfs.FileSystem;
 import org.javavfs.FileSystemSession;
+import org.javavfs.Node;
 import org.javavfs.security.Security;
 
 /**
@@ -116,6 +117,10 @@ public class CifsFileSystemSession implements FileSystemSession {
     }
 
     public Principal getPrincipal() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Node getNode(String path) throws FileNotFoundException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

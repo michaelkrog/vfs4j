@@ -25,6 +25,7 @@ public class NativeFile extends NativeNode implements File{
 
     public NativeFile(NativeFileSystemSession session, java.io.File file) throws FileNotFoundException {
         super(session,file);
+        
         if(file.isDirectory())
             throw new FileNotFoundException("The fileobject must point at an existing file.");
     }

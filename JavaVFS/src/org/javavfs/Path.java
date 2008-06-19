@@ -12,6 +12,22 @@ import java.util.ArrayList;
  * @author michael
  */
 public class Path {
+
+    public Path() {
+    }
+    
+    public Path(String path) {
+        if(path.startsWith("/"))
+            path=path.substring(1);
+        
+        if(path.endsWith("/"))
+            path.substring(0,path.length()-1);
+        
+        String[] elements = path.split("/");
+        
+        for(String element:elements)
+            levels.add(element);
+    }
     
     ArrayList<String> levels = new ArrayList<String>();
     

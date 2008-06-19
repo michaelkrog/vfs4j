@@ -111,4 +111,6 @@ public interface Node extends Comparable {
      * @return True/False
      */
     public boolean canWrite();
+    
+    
 }

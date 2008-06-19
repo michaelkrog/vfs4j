@@ -5,17 +5,13 @@
 
 package org.javavfs.nativefs;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.URI;
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
 import org.javavfs.Directory;
 import org.javavfs.FileSystem;
 import org.javavfs.FileSystemSession;
-import org.javavfs.security.NoSecurity;
-import org.javavfs.security.Security;
+import org.javavfs.Node;
+import org.javavfs.Path;
 
 /**
  *
@@ -58,7 +54,20 @@ public class NativeFileSystemSession implements FileSystemSession{
     public Principal getPrincipal() {
         return principal;
     }
-    
+
+    public Node getNode(String path) throws FileNotFoundException {
+        Path pathObject = new Path(path);
+        Node currentNode = getRoot();
+        
+        for(int i=0;i<pathObject.getLevels();i++){
+            if(currentNode.isDirectory()){
+                currentNode = ((Directory)currentNode).getChild(pathObject.getLevel(i));
+            } else
+                throw new FileNotFoundException("The path '"+path+"' does not exist.");
+        }
+        return currentNode;
+    }
+     
     
 
 }

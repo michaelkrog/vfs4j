@@ -1,0 +1,15 @@
+{
+	"password":"12345",
+	"accesses":[
+		{
+			"path":"/",
+			"read":true,
+			"write",false
+		},
+		{
+			"path":"/test",
+			"read":true,
+			"write",true
+		}
+	]
+}
