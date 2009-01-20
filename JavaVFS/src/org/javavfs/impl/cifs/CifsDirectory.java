@@ -268,7 +268,12 @@ public class CifsDirectory extends CifsNode implements Directory{
         else
             deleteRecursive(innerFile);
     }
+
+    public boolean isBundle() {
+        return innerFile.getName().contains(".");
+    }
     
+
 
     
 

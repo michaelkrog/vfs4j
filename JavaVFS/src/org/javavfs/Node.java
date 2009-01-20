@@ -43,6 +43,27 @@ public interface Node extends Comparable {
      * @return
      */
     public String getName();
+
+    /**
+     * Retrieves the name without suffix like this:
+     * myimage.jpg = myimage
+     * mybundle.app = mybundle
+     * testfile.dit.dat = testfile.dit
+     * testdir = testdir
+     *
+     * @return The nodes basename.
+     */
+    public String getBaseName();
+
+    /**
+     * Retrieves the suffix of the node or null if no suffix, like this:.
+     * myimage.jpg = jpg
+     * mybundle.app = app
+     * testfile.dit.dat = dat
+     * testdir = <null>
+     * @return The suffix or null.
+     */
+    public String getSuffix();
     
     /**
      * Retrieves the parent directory of this node.

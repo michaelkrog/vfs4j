@@ -7,7 +7,6 @@ package org.javavfs;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -149,5 +148,17 @@ public interface Directory extends Node {
      * @throws java.io.IOException Thrown if an error occurs during deletion.
      */
     public void delete(boolean recursive) throws IOException;
+
+    /**
+     * Wether this directory is a bundle or not. A bundle is a normal directory,
+     * but its contents is not intended to be shown in a GUI. It can be treated kinda
+     * like a ZIP-file(a single unit containing files and directories) except this is
+     * not really packed in anyway. It is only a logical boundary.
+     *
+     * Bundles are identied by the directory name having a suffix. Mac OS uses
+     * this a lot for Applications etc. (Safari.app)
+     * @return Wether its a bundle.
+     */
+    public boolean isBundle();
     
 }

@@ -195,6 +195,22 @@ public abstract class NativeNode implements Node{
         return session.getFileSystem().getSecurity().canWrite(getPrincipal(), this) && file.canWrite();
     }
 
+    public String getBaseName() {
+        String name = file.getName();
+        if(name.contains("."))
+            return name.substring(0,name.lastIndexOf(".")-1);
+        else
+            return name;
+    }
+
+    public String getSuffix() {
+        String name = file.getName();
+        if(name.contains("."))
+            return name.substring(name.lastIndexOf(".")+1);
+        else
+            return null;
+    }
+
     
 
 }

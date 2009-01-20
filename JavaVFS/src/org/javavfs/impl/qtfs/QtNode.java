@@ -26,7 +26,7 @@ import org.javavfs.Path;
  *
  * @author michael
  */
-public class QtNode implements Node{
+public abstract class QtNode implements Node{
     public QtNode(QtFileSystemSession session, QFileInfo file) {
         this.session=session;
         this.file=file;
@@ -212,5 +212,13 @@ public class QtNode implements Node{
 
     public boolean canWrite() {
         return file.isWritable();
+    }
+
+    public String getBaseName() {
+        return file.completeBaseName();
+    }
+
+    public String getSuffix() {
+        return file.suffix();
     }
 }

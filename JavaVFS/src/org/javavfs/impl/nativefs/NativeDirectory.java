@@ -8,16 +8,12 @@ package org.javavfs.impl.nativefs;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.javavfs.Directory;
 import org.javavfs.File;
-import org.javavfs.FileSystemSession;
 import org.javavfs.Node;
 import org.javavfs.NodeFilter;
 
@@ -222,5 +218,9 @@ public class NativeDirectory extends NativeNode implements Directory{
                 throw ex;
         }
         return dir;
+    }
+
+    public boolean isBundle() {
+        return file.getName().contains(".");
     }
 }

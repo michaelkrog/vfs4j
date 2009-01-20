@@ -178,7 +178,24 @@ public abstract class CifsNode implements Node {
     public boolean canWrite() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
+    public String getBaseName() {
+        String name = innerFile.getName();
+        if(name.contains("."))
+            return name.substring(0,name.lastIndexOf(".")-1);
+        else
+            return name;
+    }
+
+    public String getSuffix() {
+        String name = innerFile.getName();
+        if(name.contains("."))
+            return name.substring(name.lastIndexOf(".")+1);
+        else
+            return null;
+    }
+
+
     
 
 }
