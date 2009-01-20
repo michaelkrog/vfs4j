@@ -17,8 +17,11 @@ import org.javavfs.security.Security;
  */
 public class QtFileSystem implements FileSystem {
 
+    private String name="QtFileSystem";
+    private QtFileSecurity security = new QtFileSecurity();
+    
     public String getName() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return name;
     }
 
     public FileSystemSession createSession(Principal principal) {
