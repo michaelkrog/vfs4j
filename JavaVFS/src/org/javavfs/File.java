@@ -35,4 +35,5 @@ public interface File extends Node {
      * @throws java.io.IOException Throw if an error occures while retrieving the size/length.
      */
     public long getLength() throws IOException;
+
 }

@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package org.javavfs.nativefs;
+package org.javavfs.impl.nativefs;
 
 import java.io.FileNotFoundException;
 import java.security.Principal;

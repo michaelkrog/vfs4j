@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package org.javavfs.cifs;
+package org.javavfs.impl.cifs;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -15,7 +15,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
 import java.util.List;
-import org.javavfs.nativefs.NativeFileSystemSession;
+import org.javavfs.impl.nativefs.NativeFileSystemSession;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

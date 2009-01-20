@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package org.javavfs.cifs;
+package org.javavfs.impl.cifs;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,8 +20,8 @@ import org.javavfs.File;
 import org.javavfs.Node;
 import org.javavfs.NodeFilter;
 import org.javavfs.filters.DirectoryFilter;
-import org.javavfs.nativefs.NativeDirectory;
-import org.javavfs.nativefs.NativeFile;
+import org.javavfs.impl.nativefs.NativeDirectory;
+import org.javavfs.impl.nativefs.NativeFile;
 
 /**
  *

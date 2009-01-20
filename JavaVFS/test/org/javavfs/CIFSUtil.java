@@ -7,7 +7,7 @@ package org.javavfs;
 
 import java.io.IOException;
 import jcifs.smb.SmbException;
-import org.javavfs.cifs.CifsFileSystemSession;
+import org.javavfs.impl.cifs.CifsFileSystemSession;
 
 /**
  *

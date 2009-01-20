@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package org.javavfs.cifs;
+package org.javavfs.impl.cifs;
 
 import jcifs.smb.SmbException;
 import jcifs.smb.SmbFile;

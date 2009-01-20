@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
-import org.javavfs.nativefs.NativeFileSystemSession;
+import org.javavfs.impl.nativefs.NativeFileSystemSession;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

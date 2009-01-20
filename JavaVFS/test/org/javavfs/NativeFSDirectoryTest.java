@@ -5,7 +5,7 @@
 
 package org.javavfs;
 
-import org.javavfs.nativefs.NativeFileSystem;
+import org.javavfs.impl.nativefs.NativeFileSystem;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;

@@ -12,21 +12,22 @@ import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import org.javavfs.Node;
 import org.javavfs.Path;
-import org.json.JSONException;
-import org.json.JSONObject;
+//import org.json.JSONException;
+//import org.json.JSONObject;
 
 /**
- *
+ * This file is not functional now. It depended on JSON but
+ * I havent found a good lib for that.
  * @author michael
  */
-public class SimpleSecurity implements Security{
+public class SimpleSecurity /*implements Security*/{
 
     public SimpleSecurity(File securityDir) {
         this.securityDir = securityDir;
     }
 
     File securityDir;
-    
+    /*
     private JSONObject getPrincipalData(String username) throws JSONException, UnsupportedEncodingException, IOException{
         File userfile = new File(securityDir, username);
         if(!userfile.exists()){
@@ -77,6 +78,6 @@ public class SimpleSecurity implements Security{
                 return "Guest";
             }
         };
-    }
+    }*/
 
 }
