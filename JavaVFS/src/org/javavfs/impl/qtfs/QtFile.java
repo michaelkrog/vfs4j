@@ -26,11 +26,13 @@ public class QtFile extends QtNode implements File {
     
     public InputStream getInputStream() throws IOException {
         QFile tmp = new QFile(super.file.absoluteFilePath());
+        tmp.open(QFile.OpenModeFlag.ReadOnly);
         return new QDataInputStream(new QDataStream(tmp));
     }
 
     public OutputStream getOutputStream() throws IOException {
         QFile tmp = new QFile(super.file.absoluteFilePath());
+        tmp.open(QFile.OpenModeFlag.WriteOnly);
         return new QDataOutputStream(new QDataStream(tmp));
     }
 

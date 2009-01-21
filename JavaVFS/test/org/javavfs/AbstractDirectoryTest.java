@@ -55,11 +55,17 @@ public abstract class AbstractDirectoryTest {
     public void testCreateDirectory() throws Exception {
         System.out.println("createDirectory");
         String name = "dir";
-        Directory instance = filesystem.createSession(null).getRoot();
-        Directory result = instance.createDirectory(name);
+        Directory root = filesystem.createSession(null).getRoot();
+        Directory result = root.createDirectory(name);
         assertNotNull(result);
         
         assertEquals("dir", result.getName());
+
+        Path expectedPath = root.getPath();
+        expectedPath.addLevel("dir");
+
+        Path resultPath = result.getPath();
+        assertEquals(expectedPath, resultPath);
         result.delete();
     }
 
@@ -70,11 +76,18 @@ public abstract class AbstractDirectoryTest {
     public void testCreateFile() throws Exception {
         System.out.println("createFile");
         String name = "file";
-        Directory instance = filesystem.createSession(null).getRoot();
-        File result = instance.createFile(name);
+        Directory root = filesystem.createSession(null).getRoot();
+        File result = root.createFile(name);
         assertNotNull(result);
         
         assertEquals("file", result.getName());
+
+        Path expectedPath = root.getPath();
+        expectedPath.addLevel("file");
+
+        Path resultPath = result.getPath();
+        assertEquals(expectedPath, resultPath);
+
         result.delete();
     }
 

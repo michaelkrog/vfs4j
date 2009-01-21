@@ -13,11 +13,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.javavfs.Directory;
 import org.javavfs.File;
-import org.javavfs.FileSystemSession;
 import org.javavfs.Node;
 import org.javavfs.NodeFilter;
 import org.javavfs.Path;
@@ -32,8 +29,9 @@ public class QtDirectory extends QtNode implements Directory {
         super(session, file);
     }
 
+    
     public Directory createDirectory(String name) throws IOException {
-        QDir dir = file.absoluteDir();
+        QDir dir = new QDir(file.absoluteFilePath());
         boolean created = dir.mkdir(name);
         if(!created)
             throw new IOException("Unable to create directory '"+name+"' in folder '"+file.absolutePath()+"'");
@@ -42,36 +40,36 @@ public class QtDirectory extends QtNode implements Directory {
     }
 
     public File createFile(String name) throws IOException {
-        Path path = this.getPath();
-        path.addLevel(name);
-        
-        QFile tmp = new QFile(path.toString());
+        String path = file.absoluteFilePath()+"/"+name;
+
+        QFile tmp = new QFile(path);
         boolean created = tmp.open(QIODevice.OpenModeFlag.WriteOnly);
+        //tmp.write(new byte[1]);
         tmp.close();
 
         if(!created)
-            throw new IOException("Unable to create file '"+name+"' in folder '"+file.absolutePath()+"'");
+            throw new IOException("Unable to create file '"+name+"' in folder '"+file.absoluteFilePath()+"'");
 
-        return new QtFile(session, new QFileInfo(file.absoluteDir(), name));
+        return new QtFile(session, new QFileInfo(path));
     }
 
     public boolean hasChild(String name) {
-        QFileInfo child = new QFileInfo(file.absoluteDir(), name);
+        QFileInfo child = new QFileInfo(file.absoluteFilePath()+"/"+name);
         return child.exists();
     }
 
     public boolean hasFile(String name) {
-        QFileInfo child = new QFileInfo(file.absoluteDir(), name);
+        QFileInfo child = new QFileInfo(file.absoluteFilePath()+"/"+name);
         return child.exists() && !child.isDir();
     }
 
     public boolean hasDirectory(String name) {
-        QFileInfo child = new QFileInfo(file.absoluteDir(), name);
+        QFileInfo child = new QFileInfo(file.absoluteFilePath()+"/"+name);
         return child.exists() && child.isDir();
     }
 
     public Node getChild(String name) throws FileNotFoundException {
-        QFileInfo child = new QFileInfo(file.absoluteDir(), name);
+        QFileInfo child = new QFileInfo(file.absoluteFilePath()+"/"+name);
         if(!child.exists())
             throw new FileNotFoundException("Child not found [Path="+child.absolutePath()+"].");
     
@@ -98,7 +96,7 @@ public class QtDirectory extends QtNode implements Directory {
     }
 
     public File getFile(String name, boolean createIfNeeded) throws FileNotFoundException, IOException {
-        QFileInfo child = new QFileInfo(file.absoluteDir(), name);
+        QFileInfo child = new QFileInfo(file.absoluteFilePath()+"/"+name);
         if(!child.exists()){
             if(createIfNeeded)
                 return createFile(name);
@@ -109,7 +107,7 @@ public class QtDirectory extends QtNode implements Directory {
     }
 
     public Directory getDirectory(String name, boolean createIfNeeded) throws FileNotFoundException, IOException {
-        QFileInfo child = new QFileInfo(file.absoluteDir(), name);
+        QFileInfo child = new QFileInfo(file.absoluteFilePath()+"/"+name);
         if(!child.exists()){
             if(createIfNeeded)
                 return createDirectory(name);
@@ -120,9 +118,13 @@ public class QtDirectory extends QtNode implements Directory {
     }
 
     public List<Node> getChildren() {
-        List<QFileInfo> children = file.absoluteDir().entryInfoList();
+        String path = file.absoluteFilePath();
+        QDir dir = new QDir(path);
+
+        List<QFileInfo> children = dir.entryInfoList(qtfilter);
         List<Node> nodes = new ArrayList<Node>();
         for(QFileInfo fileinfo : children){
+            path = fileinfo.absoluteFilePath();
             if(fileinfo.isDir())
                 nodes.add(new QtDirectory(session, fileinfo));
             else
@@ -132,35 +134,53 @@ public class QtDirectory extends QtNode implements Directory {
     }
 
     public List<Directory> getDirectories() {
-        List<QFileInfo> children = file.absoluteDir().entryInfoList();
-        List<Directory> nodes = new ArrayList<Directory>();
-        for(QFileInfo fileinfo : children){
-            if(fileinfo.isDir())
-                nodes.add(new QtDirectory(session, fileinfo));
-        }
-        return nodes;
+       return getDirectories(null);
     }
 
     public List<File> getFiles() {
-        List<QFileInfo> children = file.absoluteDir().entryInfoList();
-        List<File> nodes = new ArrayList<File>();
+        return getFiles(null);
+    }
+
+    public List<Node> getChildren(NodeFilter filter) {
+        List<QFileInfo> children = new QDir(file.absoluteFilePath()).entryInfoList(qtfilter);
+        List<Node> nodes = new ArrayList<Node>();
         for(QFileInfo fileinfo : children){
-            if(!fileinfo.isDir())
-                nodes.add(new QtFile(session, fileinfo));
+            Node node;
+            if(fileinfo.isDir())
+                node=new QtDirectory(session, fileinfo);
+            else
+                node=new QtFile(session, fileinfo);
+
+            if(filter==null || filter.accept(node))
+                nodes.add(node);
         }
         return nodes;
     }
 
-    public List<Node> getChildren(NodeFilter filter) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
     public List<Directory> getDirectories(NodeFilter filter) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        List<QFileInfo> children = new QDir(file.absoluteFilePath()).entryInfoList(qtfilter);
+        List<Directory> nodes = new ArrayList<Directory>();
+        for(QFileInfo fileinfo : children){
+            if(fileinfo.isDir()){
+                Directory dir = new QtDirectory(session, fileinfo);
+                if(filter ==null || filter.accept(dir))
+                    nodes.add(dir);
+            }
+        }
+        return nodes;
     }
 
     public List<File> getFiles(NodeFilter filter) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        List<QFileInfo> children = new QDir(file.absoluteFilePath()).entryInfoList(qtfilter);
+        List<File> nodes = new ArrayList<File>();
+        for(QFileInfo fileinfo : children){
+            if(!fileinfo.isDir()){
+                File file = new QtFile(session,fileinfo);
+                if(filter==null || filter.accept(file))
+                    nodes.add(file);
+            }
+        }
+        return nodes;
     }
 
     public boolean isBundle() {

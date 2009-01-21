@@ -67,4 +67,20 @@ public class Path {
         }
         return buf.toString();
     }
+
+    @Override
+    public boolean equals(Object compareTo) {
+        Path otherPath = (Path)compareTo;
+
+        if(otherPath.levels.size()!=levels.size())
+            return false;
+
+        for(int i=0;i<levels.size();i++){
+            if(!levels.get(i).equals(otherPath.levels.get(i)))
+                return false;
+        }
+        return true;
+    }
+
+
 }

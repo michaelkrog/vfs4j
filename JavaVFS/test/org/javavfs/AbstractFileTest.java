@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
+import java.security.Principal;
 import java.util.List;
 import org.javavfs.impl.nativefs.NativeFileSystemSession;
 import org.junit.After;
@@ -37,8 +38,9 @@ public class AbstractFileTest {
     }
 
     
-        private void clean() throws IOException{
-        List<Node> nodes = filesystem.createSession(null).getRoot().getChildren();
+    private void clean() throws IOException{
+        Principal p = filesystem.getSecurity().getGuestPrincipal();
+        List<Node> nodes = filesystem.createSession(p).getRoot().getChildren();
         
         for(Node node:nodes){
             if(node.isDirectory()){
@@ -81,12 +83,11 @@ public class AbstractFileTest {
         System.out.println("getLength");
         Directory root = filesystem.createSession(null).getRoot();
         File tmp = root.getFile("tmp", true);
-        
-        long expResult = 3;
+
+        byte[] data = new byte[]{1,2,3};
+        long expResult = data.length;
         OutputStream os = tmp.getOutputStream();
-        os.write(1);
-        os.write(2);
-        os.write(3);
+        os.write(data);
         os.close();
         
         long result = tmp.getLength();

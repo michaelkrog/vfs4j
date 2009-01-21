@@ -5,6 +5,7 @@
 
 package org.javavfs.impl.qtfs;
 
+import com.trolltech.qt.core.QFileInfo;
 import java.security.Principal;
 import org.javavfs.Node;
 import org.javavfs.security.Security;
@@ -15,28 +16,53 @@ import org.javavfs.security.Security;
  */
 public class QtFileSecurity implements Security {
 
+    private QFileInfo getQFileInfo(Node node){
+        if(!(node instanceof QtNode))
+            throw new UnsupportedOperationException("The node is not a QtNode.");
+        return ((QtNode)node).getQFileInfo();
+    }
+
     public boolean canRead(Principal principal, Node node) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        QFileInfo fileinfo = getQFileInfo(node);
+        return fileinfo.isReadable();
     }
 
     public boolean canWrite(Principal principal, Node node) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        QFileInfo fileinfo = getQFileInfo(node);
+        return fileinfo.isWritable();
     }
 
     public void checkRead(Principal principal, Node node) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        QFileInfo fileinfo = getQFileInfo(node);
+        if(!fileinfo.isReadable())
+            throw new SecurityException("Read not allowed for node: [path="+fileinfo.absolutePath()+"]");
     }
 
     public void checkWrite(Principal principal, Node node) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        QFileInfo fileinfo = getQFileInfo(node);
+        if(!fileinfo.isWritable())
+            throw new SecurityException("Write not allowed for node: [path="+fileinfo.absolutePath()+"]");
     }
 
-    public Principal getPrincipal(String username, String password) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Principal getPrincipal(final String username, String password) {
+        //Principals is not really supported by this security
+        //Returns a dummy principal.
+        return new Principal() {
+
+            public String getName() {
+                return username;
+            }
+        };
+
     }
 
     public Principal getGuestPrincipal() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return new Principal() {
+
+            public String getName() {
+                return "Guest";
+            }
+        };
     }
 
 }

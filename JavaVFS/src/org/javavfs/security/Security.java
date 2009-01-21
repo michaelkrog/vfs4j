@@ -31,13 +31,13 @@ public interface Security {
      * Same as <code>canRead</code> but throws an exception if access is denied.
      * @param node The node to check for.
      */
-    public void checkRead(Principal principal, Node node);
+    public void checkRead(Principal principal, Node node) throws SecurityException;
     
     /**
      * Same as <code>canWrite</code> but throws an exception if access is denied.
      * @param node The node to check for.
      */
-    public void checkWrite(Principal principal, Node node);
+    public void checkWrite(Principal principal, Node node) throws SecurityException;
     
     public Principal getPrincipal(String username, String password);
     

@@ -31,7 +31,9 @@ public abstract class QtNode implements Node{
         this.session=session;
         this.file=file;
     }
-    
+
+    protected static QDir.Filters qtfilter = new QDir.Filters(QDir.Filter.NoDotAndDotDot,
+                                        QDir.Filter.AllEntries);
     protected QtFileSystemSession session;
     protected QFileInfo file;
 
@@ -41,8 +43,14 @@ public abstract class QtNode implements Node{
     private void deleteNonRecursive(QFileInfo file) throws IOException{
         session.getFileSystem().getSecurity().checkWrite(getPrincipal(), this);
         
-        QDir parentDir = file.dir();
-        boolean deleted = parentDir.remove(file.fileName());
+        QDir parentDir = file.absoluteDir();
+        boolean deleted;
+        
+        if(file.isDir())
+            deleted = parentDir.rmdir(file.fileName());
+        else
+            deleted = parentDir.remove(file.fileName());
+
         if(!deleted && file.isDir())
             throw new IOException("Could not delete directory. Maybe because it is not empty.[path="+file.toString()+"]");
         else if(!deleted)
@@ -55,9 +63,9 @@ public abstract class QtNode implements Node{
             throw new IOException("A file cannot be deleted recursively.");
         
         if(file.exists()){
-            
-            QDir dir = file.absoluteDir();
-            List<QFileInfo> files = dir.entryInfoList();
+            String path = file.absoluteFilePath();
+            QDir dir = new QDir(path);
+            List<QFileInfo> files = dir.entryInfoList(qtfilter);
             for(QFileInfo currentFile:files){
                 if(currentFile.isDir())
                     deleteRecursive(currentFile);
@@ -220,5 +228,9 @@ public abstract class QtNode implements Node{
 
     public String getSuffix() {
         return file.suffix();
+    }
+
+    public QFileInfo getQFileInfo(){
+        return file;
     }
 }

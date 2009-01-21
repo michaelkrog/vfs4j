@@ -23,7 +23,7 @@ public class QDataInputStream extends InputStream{
     
     @Override
     public int read() throws IOException {
-        return innerStream.readInt();
+        return innerStream.readByte();
     }
 
 }

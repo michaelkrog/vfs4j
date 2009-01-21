@@ -5,7 +5,10 @@
 
 package org.javavfs.impl.qtfs;
 
+import com.trolltech.qt.core.QDir;
+import com.trolltech.qt.core.QFileInfo;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.Map;
 import org.javavfs.FileSystem;
 import org.javavfs.FileSystemSession;
@@ -17,27 +20,53 @@ import org.javavfs.security.Security;
  */
 public class QtFileSystem implements FileSystem {
 
+    public QtFileSystem(String path) {
+        
+        //Add info to infomap
+        infomap.put(FileSystem.FSInfo_Name, "QtFS");
+        infomap.put(FileSystem.FSInfo_Description, "A filesystem based upon Qt's file implementation.");
+        infomap.put(FileSystem.FSInfo_Version, "0.1.0");
+        
+        //Java version < 1.6
+        infomap.put(FileSystem.FSInfo_HasFreeSpaceInformation, "false");
+        infomap.put(FileSystem.FSInfo_HasSizeInformation, "false");
+        
+        
+        root = new QFileInfo(path);
+        if(!root.exists() || !root.isDir())
+            throw new IllegalArgumentException("path must point at a valid directory. [uri="+root.toString()+"]");
+
+        
+    }
+
+    private QFileInfo root;
+    private HashMap infomap = new HashMap();
     private String name="QtFileSystem";
-    private QtFileSecurity security = new QtFileSecurity();
+    private Security security = new QtFileSecurity();
+
+    public QFileInfo getRoot() {
+        return root;
+    }
+
     
     public String getName() {
         return name;
     }
 
     public FileSystemSession createSession(Principal principal) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return new QtFileSystemSession(this, principal);
     }
 
     public Map getInfo() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return infomap;
     }
 
     public Security getSecurity() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return security;
     }
 
     public void setSecurity(Security security) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.security=security;
     }
 
 }

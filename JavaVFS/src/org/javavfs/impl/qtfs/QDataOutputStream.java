@@ -23,7 +23,17 @@ public class QDataOutputStream extends OutputStream {
     
     @Override
     public void write(int data) throws IOException {
-        innerstream.writeInt(data);
+        byte value = (byte)data;
+        innerstream.writeByte(value);
+
     }
+
+    @Override
+    public void close() throws IOException {
+        innerstream.device().close();
+        super.close();
+    }
+
+
 
 }
