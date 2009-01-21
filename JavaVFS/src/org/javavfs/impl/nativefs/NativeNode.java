@@ -198,7 +198,7 @@ public abstract class NativeNode implements Node{
     public String getBaseName() {
         String name = file.getName();
         if(name.contains("."))
-            return name.substring(0,name.lastIndexOf(".")-1);
+            return name.substring(0,name.lastIndexOf("."));
         else
             return name;
     }

@@ -69,6 +69,26 @@ public abstract class AbstractDirectoryTest {
         result.delete();
     }
 
+    @Test
+    public void testCreateBundle() throws Exception {
+        System.out.println("createBundle");
+        String name = "Safari.app";
+        Directory root = filesystem.createSession(null).getRoot();
+        Directory result = root.createDirectory(name);
+        assertNotNull(result);
+
+        assertTrue(result.isBundle());
+        assertEquals("Safari", result.getBaseName());
+        assertEquals("app", result.getSuffix());
+
+        Path expectedPath = root.getPath();
+        expectedPath.addLevel("Safari.app");
+
+        Path resultPath = result.getPath();
+        assertEquals(expectedPath, resultPath);
+        result.delete();
+    }
+
     /**
      * Test of createFile method, of class Directory.
      */
