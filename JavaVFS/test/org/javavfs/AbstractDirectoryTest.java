@@ -73,7 +73,11 @@ public abstract class AbstractDirectoryTest {
     public void testCreateBundle() throws Exception {
         System.out.println("createBundle");
         String name = "Safari.app";
+        String name2 = "Bundle.Test.app";
+
         Directory root = filesystem.createSession(null).getRoot();
+
+        //Test name
         Directory result = root.createDirectory(name);
         assertNotNull(result);
 
@@ -82,9 +86,24 @@ public abstract class AbstractDirectoryTest {
         assertEquals("app", result.getSuffix());
 
         Path expectedPath = root.getPath();
-        expectedPath.addLevel("Safari.app");
+        expectedPath.addLevel(name);
 
         Path resultPath = result.getPath();
+        assertEquals(expectedPath, resultPath);
+        result.delete();
+
+        //Test name2
+        result = root.createDirectory(name2);
+        assertNotNull(result);
+
+        assertTrue(result.isBundle());
+        assertEquals("Bundle.Test", result.getBaseName());
+        assertEquals("app", result.getSuffix());
+
+        expectedPath = root.getPath();
+        expectedPath.addLevel(name2);
+
+        resultPath = result.getPath();
         assertEquals(expectedPath, resultPath);
         result.delete();
     }
