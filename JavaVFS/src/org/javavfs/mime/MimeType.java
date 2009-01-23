@@ -3,8 +3,9 @@
  * and open the template in the editor.
  */
 
-package org.javavfs;
+package org.javavfs.mime;
 
+import org.javavfs.*;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -40,12 +41,17 @@ public class MimeType {
      * @return The mimetype.
      */
     public static String retrieve(File file){
-        init();
-        return mimetypes.getProperty(file.getSuffix());
+        return retrieve(file.getSuffix());
     }
 
     public static String retrieve(String suffix){
         init();
-        return mimetypes.getProperty(suffix);
+        String type = null;
+        if(suffix!=null)
+            type = mimetypes.getProperty(suffix);
+        
+        if(type==null)
+            type="application/octet-stream";
+        return type;
     }
 }

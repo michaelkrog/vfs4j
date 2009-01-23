@@ -23,7 +23,14 @@ public class QDataInputStream extends InputStream{
     
     @Override
     public int read() throws IOException {
-        return innerStream.readByte();
+        if(innerStream.atEnd()){
+            System.out.println("No more data");
+            return -1;
+        }
+
+        //The byte we read is signed, but we need to return the value
+        //as unsigned - therefore we AND it with 0xFF
+        return innerStream.readByte() & 0XFF;
     }
 
 }

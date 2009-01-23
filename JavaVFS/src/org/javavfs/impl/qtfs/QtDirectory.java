@@ -71,7 +71,7 @@ public class QtDirectory extends QtNode implements Directory {
     public Node getChild(String name) throws FileNotFoundException {
         QFileInfo child = new QFileInfo(file.absoluteFilePath()+"/"+name);
         if(!child.exists())
-            throw new FileNotFoundException("Child not found [Path="+child.absolutePath()+"].");
+            throw new FileNotFoundException("Child not found [Path="+child.absoluteFilePath()+"].");
     
         if(child.isDir())
             return new QtDirectory(session, new QFileInfo(child.absoluteDir(), name));
@@ -101,7 +101,7 @@ public class QtDirectory extends QtNode implements Directory {
             if(createIfNeeded)
                 return createFile(name);
             else
-                throw new FileNotFoundException("File not found [Path="+child.absolutePath()+"].");
+                throw new FileNotFoundException("File not found [Path="+child.absoluteFilePath()+"].");
         }
         return new QtFile(session, new QFileInfo(child.absoluteDir(), name));
     }
@@ -112,7 +112,7 @@ public class QtDirectory extends QtNode implements Directory {
             if(createIfNeeded)
                 return createDirectory(name);
             else
-                throw new FileNotFoundException("Directory not found [Path="+child.absolutePath()+"].");
+                throw new FileNotFoundException("Directory not found [Path="+child.absoluteFilePath()+"].");
         }
         return new QtDirectory(session, new QFileInfo(child.absoluteDir(), name));
     }
