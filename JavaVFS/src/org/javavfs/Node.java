@@ -83,6 +83,13 @@ public interface Node extends Comparable {
      * @return True/False wether this node is a directory.
      */
     public boolean isDirectory();
+
+    /**
+     * Checks wether this node is a file.
+     * @return True/False wether this node is a file.
+     */
+    public boolean isFile();
+
     
     /**
      * Checks wether this node is hidden.

@@ -143,8 +143,12 @@ public abstract class QtNode implements Node{
         return session;
     }
     
- public boolean isDirectory() {
+    public boolean isDirectory() {
         return file.isDir();
+    }
+
+    public boolean isFile() {
+        return file.isFile();
     }
 
     public boolean isHidden() {

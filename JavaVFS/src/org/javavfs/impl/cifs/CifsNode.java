@@ -114,6 +114,15 @@ public abstract class CifsNode implements Node {
         }
     }
 
+    public boolean isFile() {
+        try{
+            return innerFile.isFile();
+        } catch(SmbException ex){
+            Logger.getLogger(CifsNode.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
     public boolean isHidden() {
         try {
             return innerFile.isHidden();

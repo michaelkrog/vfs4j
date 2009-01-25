@@ -124,9 +124,15 @@ public abstract class NativeNode implements Node{
         return session;
     }
     
- public boolean isDirectory() {
+    public boolean isDirectory() {
         return file.isDirectory();
     }
+
+    public boolean isFile() {
+        return file.isFile();
+    }
+
+
 
     public boolean isHidden() {
         return file.isHidden();
