@@ -23,8 +23,8 @@ import org.javavfs.File;
  */
 public class NativeFile extends NativeNode implements File{
 
-    public NativeFile(NativeFileSystemSession session, java.io.File file) throws FileNotFoundException {
-        super(session,file);
+    public NativeFile(NativeFileSystem fs, java.io.File file) throws FileNotFoundException {
+        super(fs,file);
         
         if(file.isDirectory())
             throw new FileNotFoundException("The fileobject must point at an existing file.");
@@ -32,7 +32,6 @@ public class NativeFile extends NativeNode implements File{
 
     public InputStream getInputStream() throws IOException {
         try {
-            session.getFileSystem().getSecurity().checkRead(getPrincipal(), this);
             return new FileInputStream(file);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(NativeFile.class.getName()).log(Level.SEVERE, null, ex);
@@ -42,7 +41,6 @@ public class NativeFile extends NativeNode implements File{
 
     public OutputStream getOutputStream() throws IOException {
         try {
-            session.getFileSystem().getSecurity().checkWrite(getPrincipal(), this);
             return new FileOutputStream(file);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(NativeFile.class.getName()).log(Level.SEVERE, null, ex);

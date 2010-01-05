@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
-import org.javavfs.impl.nativefs.NativeFileSystemSession;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -37,7 +36,7 @@ public abstract class AbstractDirectoryTest {
     }
 
     private void clean() throws IOException{
-        List<Node> nodes = filesystem.createSession(null).getRoot().getChildren();
+        List<Node> nodes = filesystem.getRoot().getChildren();
         
         for(Node node:nodes){
             if(node.isDirectory()){
@@ -55,7 +54,7 @@ public abstract class AbstractDirectoryTest {
     public void testCreateDirectory() throws Exception {
         System.out.println("createDirectory");
         String name = "dir";
-        Directory root = filesystem.createSession(null).getRoot();
+        Directory root = filesystem.getRoot();
         Directory result = root.createDirectory(name);
         assertNotNull(result);
         
@@ -75,7 +74,7 @@ public abstract class AbstractDirectoryTest {
         String name = "Safari.app";
         String name2 = "Bundle.Test.app";
 
-        Directory root = filesystem.createSession(null).getRoot();
+        Directory root = filesystem.getRoot();
 
         //Test name
         Directory result = root.createDirectory(name);
@@ -115,7 +114,7 @@ public abstract class AbstractDirectoryTest {
     public void testCreateFile() throws Exception {
         System.out.println("createFile");
         String name = "file";
-        Directory root = filesystem.createSession(null).getRoot();
+        Directory root = filesystem.getRoot();
         File result = root.createFile(name);
         assertNotNull(result);
         
@@ -137,7 +136,7 @@ public abstract class AbstractDirectoryTest {
     public void testHasChild() throws Exception {
         System.out.println("hasChild");
         String name = "tmp";
-        Directory instance = filesystem.createSession(null).getRoot();
+        Directory instance = filesystem.getRoot();
         File tmp = instance.createFile(name);
         boolean expResult = true;
         boolean result = instance.hasChild(name);
@@ -153,7 +152,7 @@ public abstract class AbstractDirectoryTest {
     public void testHasFile() throws Exception {
         System.out.println("hasFile");
         String name = "tmp";
-        Directory instance = filesystem.createSession(null).getRoot();
+        Directory instance = filesystem.getRoot();
         File tmp = instance.createFile(name);
         boolean expResult = true;
         boolean result = instance.hasFile(name);
@@ -169,7 +168,7 @@ public abstract class AbstractDirectoryTest {
     public void testHasDirectory() throws Exception {
         System.out.println("hasDirectory");
         String name = "tmp";
-        Directory instance = filesystem.createSession(null).getRoot();
+        Directory instance = filesystem.getRoot();
         Directory tmp = instance.createDirectory(name);
         boolean expResult = true;
         boolean result = instance.hasDirectory(name);
@@ -185,7 +184,7 @@ public abstract class AbstractDirectoryTest {
     public void testGetChild() throws Exception {
         System.out.println("getChild");
         String name = "tmp";
-        Directory instance = filesystem.createSession(null).getRoot();
+        Directory instance = filesystem.getRoot();
         Node tmp = instance.createFile(name);
         
         Node result = instance.getChild(name);
@@ -201,7 +200,7 @@ public abstract class AbstractDirectoryTest {
     public void testGetFile_String() throws Exception {
         System.out.println("getFile");
         String name = "tmp";
-        Directory instance = filesystem.createSession(null).getRoot();
+        Directory instance = filesystem.getRoot();
         File tmp = instance.createFile(name);
         
         File result = instance.getFile(name);
@@ -217,7 +216,7 @@ public abstract class AbstractDirectoryTest {
     public void testGetDirectory_String() throws Exception {
         System.out.println("getDirectory");
         String name = "tmp";
-        Directory instance = filesystem.createSession(null).getRoot();
+        Directory instance = filesystem.getRoot();
         Directory tmp = instance.createDirectory(name);
         
         Directory result = instance.getDirectory(name);
@@ -233,7 +232,7 @@ public abstract class AbstractDirectoryTest {
     public void testGetFile_String_boolean() throws Exception {
         System.out.println("getFile");
         String name = "tmp";
-        Directory instance = filesystem.createSession(null).getRoot();
+        Directory instance = filesystem.getRoot();
         File tmp = instance.getFile(name,true);
         
         File result = instance.getFile(name);
@@ -249,7 +248,7 @@ public abstract class AbstractDirectoryTest {
     public void testGetDirectory_String_boolean() throws Exception {
         System.out.println("getDirectory");
         String name = "tmp";
-        Directory instance = filesystem.createSession(null).getRoot();
+        Directory instance = filesystem.getRoot();
         Directory tmp = instance.getDirectory(name,true);
         
         Directory result = instance.getDirectory(name);
@@ -264,7 +263,7 @@ public abstract class AbstractDirectoryTest {
     @Test
     public void testGetChildren_0args() throws Exception {
         System.out.println("getChildren");
-        Directory instance = filesystem.createSession(null).getRoot();
+        Directory instance = filesystem.getRoot();
         Directory dir = instance.createDirectory("dir");
         dir.createFile("file1");
         dir.createFile("file2");
@@ -288,7 +287,7 @@ public abstract class AbstractDirectoryTest {
     @Test
     public void testGetDirectories_0args() throws Exception {
         System.out.println("getDirectories");
-        Directory instance = filesystem.createSession(null).getRoot();
+        Directory instance = filesystem.getRoot();
         Directory dir = instance.createDirectory("dir");
         dir.createFile("file1");
         dir.createFile("file2");
@@ -309,7 +308,7 @@ public abstract class AbstractDirectoryTest {
     @Test
     public void testGetFiles_0args() throws Exception {
         System.out.println("getFiles");
-        Directory instance = filesystem.createSession(null).getRoot();
+        Directory instance = filesystem.getRoot();
         Directory dir = instance.createDirectory("dir");
         dir.createFile("file1");
         dir.createFile("file2");
@@ -332,7 +331,7 @@ public abstract class AbstractDirectoryTest {
     @Test
     public void testGetChildren_NodeFilter() throws Exception {
         System.out.println("getChildren");
-        Directory instance = filesystem.createSession(null).getRoot();
+        Directory instance = filesystem.getRoot();
         Directory dir = instance.createDirectory("dir");
         dir.createFile("file1");
         dir.createFile("file2");
@@ -360,7 +359,7 @@ public abstract class AbstractDirectoryTest {
     @Test
     public void testGetDirectories_NodeFilter() throws Exception {
         System.out.println("getDirectories");
-        Directory instance = filesystem.createSession(null).getRoot();
+        Directory instance = filesystem.getRoot();
         Directory dir = instance.createDirectory("dir");
         dir.createFile("file1");
         dir.createFile("file2");
@@ -386,7 +385,7 @@ public abstract class AbstractDirectoryTest {
     @Test
     public void testGetFiles_NodeFilter() throws Exception{
         System.out.println("getFiles");
-        Directory instance = filesystem.createSession(null).getRoot();
+        Directory instance = filesystem.getRoot();
         Directory dir = instance.createDirectory("dir");
         dir.createFile("file1");
         dir.createFile("file2");

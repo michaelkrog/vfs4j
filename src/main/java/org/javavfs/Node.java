@@ -76,7 +76,7 @@ public interface Node extends Comparable {
      * Retrieves the filesystem which this node belongs to.
      * @return The filesystem.
      */
-    public FileSystemSession getFileSystem();
+    public FileSystem getFileSystem();
     
     /**
      * Checks wether this node is a directory.

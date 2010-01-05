@@ -18,12 +18,12 @@ import org.javavfs.NodeFilter;
  */
 public class SmbFilterWrapper implements SmbFileFilter {
 
-    public SmbFilterWrapper(CifsFileSystemSession filesystem, NodeFilter filter) {
+    public SmbFilterWrapper(CifsFileSystem filesystem, NodeFilter filter) {
         this.filesystem=filesystem;
         this.filter=filter;
     }
 
-    CifsFileSystemSession filesystem;
+    CifsFileSystem filesystem;
     NodeFilter filter;
     
     public boolean accept(SmbFile file) throws SmbException {

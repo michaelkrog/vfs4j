@@ -7,7 +7,7 @@ package org.javavfs;
 
 import java.net.MalformedURLException;
 import jcifs.smb.SmbException;
-import org.javavfs.impl.cifs.CifsFileSystemSession;
+import org.javavfs.impl.cifs.CifsFileSystem;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

@@ -18,7 +18,6 @@ import org.javavfs.File;
 import org.javavfs.FileSystemSession;
 import org.javavfs.Node;
 import org.javavfs.impl.nativefs.NativeFileSystem;
-import org.javavfs.impl.nativefs.NativeFileSystemSession;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

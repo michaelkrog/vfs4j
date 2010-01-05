@@ -7,21 +7,21 @@ package org.javavfs;
 
 import java.io.IOException;
 import jcifs.smb.SmbException;
-import org.javavfs.impl.cifs.CifsFileSystemSession;
+import org.javavfs.impl.cifs.CifsFileSystem;
 
 /**
  *
  * @author michael
  */
 public class CIFSUtil {
-    public static CifsFileSystemSession getFileSystem() throws IOException{
-        String[] shares = CifsFileSystemSession.getShares("localhost");
+    public static CifsFileSystem getFileSystem() throws IOException{
+        String[] shares = CifsFileSystem.getShares("localhost");
         if(shares.length==0)
             throw new IOException("No shares available for test.");
         
         for(int i=0;i<shares.length;i++){
             try{
-                return new CifsFileSystemSession("localhost", shares[i]);
+                return new CifsFileSystem("localhost", shares[i]);
             } catch(SmbException ex){
                 System.out.println("Unable to connect to share. -> "+ex.getMessage());
             }

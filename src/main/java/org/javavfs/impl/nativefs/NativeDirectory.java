@@ -23,8 +23,8 @@ import org.javavfs.NodeFilter;
  */
 public class NativeDirectory extends NativeNode implements Directory{
 
-    public NativeDirectory(NativeFileSystemSession session, java.io.File file) throws FileNotFoundException {
-        super(session,file);
+    public NativeDirectory(NativeFileSystem fs, java.io.File file) throws FileNotFoundException {
+        super(fs,file);
         if(!file.isDirectory())
             throw new FileNotFoundException("The fileobject must point at an existing directory.");
         
@@ -32,7 +32,6 @@ public class NativeDirectory extends NativeNode implements Directory{
     }
 
     public Directory createDirectory(String name) throws IOException {
-        session.getFileSystem().getSecurity().checkWrite(getPrincipal(), this);
             
         java.io.File newDir = new java.io.File(file,name);
         if(newDir.isFile())
@@ -45,17 +44,16 @@ public class NativeDirectory extends NativeNode implements Directory{
         if(!created)
             throw new IOException("Could not create folder.");
         
-        return new NativeDirectory(session, newDir);
+        return new NativeDirectory(fs, newDir);
     }
 
     public org.javavfs.File createFile(String name) throws IOException {
-        session.getFileSystem().getSecurity().checkWrite(getPrincipal(), this);
             
         java.io.File newFile = new java.io.File(file, name);
 
         boolean created = newFile.createNewFile();
         if(created)
-            return new NativeFile(session, newFile);
+            return new NativeFile(fs, newFile);
         else
             throw new IOException("File already exists. Cannot be created.");
     }
@@ -74,7 +72,6 @@ public class NativeDirectory extends NativeNode implements Directory{
 
     public List<Node> getChildren(NodeFilter filter) 
     {
-        session.getFileSystem().getSecurity().checkRead(getPrincipal(), this);
             
         java.io.File[] files = file.listFiles();
         ArrayList<Node> nodes = new ArrayList<Node>();
@@ -83,9 +80,9 @@ public class NativeDirectory extends NativeNode implements Directory{
             try {
                 Node node;
                 if (file.isDirectory()) {
-                    node = new NativeDirectory(session, file);
+                    node = new NativeDirectory(fs, file);
                 } else {
-                    node = new NativeFile(session, file);
+                    node = new NativeFile(fs, file);
                 }
                 if (filter == null || filter.accept(node)) {
                     nodes.add(node);
@@ -98,7 +95,6 @@ public class NativeDirectory extends NativeNode implements Directory{
     }
 
     public List<Directory> getDirectories(NodeFilter filter) {
-        session.getFileSystem().getSecurity().checkRead(getPrincipal(), this);
             
         java.io.File[] files = file.listFiles();
         ArrayList<Directory> nodes = new ArrayList<Directory>();
@@ -107,7 +103,7 @@ public class NativeDirectory extends NativeNode implements Directory{
             Directory node;
             if(file.isDirectory()){
                 try {
-                    node = new NativeDirectory(session, file);
+                    node = new NativeDirectory(fs, file);
 
                     if (filter == null || filter.accept(node)) {
                         nodes.add(node);
@@ -121,7 +117,6 @@ public class NativeDirectory extends NativeNode implements Directory{
     }
 
     public List<File> getFiles(NodeFilter filter) {
-        session.getFileSystem().getSecurity().checkRead(getPrincipal(), this);
             
         java.io.File[] files = file.listFiles();
         ArrayList<File> nodes = new ArrayList<File>();
@@ -130,7 +125,7 @@ public class NativeDirectory extends NativeNode implements Directory{
             File node;
             if(!file.isDirectory()){
                 try {
-                    node = new NativeFile(session, file);
+                    node = new NativeFile(fs, file);
 
                     if (filter == null || filter.accept(node)) {
                         nodes.add(node);
@@ -144,28 +139,24 @@ public class NativeDirectory extends NativeNode implements Directory{
     }
 
     public boolean hasChild(String name) {
-        session.getFileSystem().getSecurity().checkRead(getPrincipal(), this);
             
         java.io.File file = new java.io.File(this.file,name);
         return file.exists();
     }
 
     public boolean hasFile(String name) {
-        session.getFileSystem().getSecurity().checkRead(getPrincipal(), this);
             
         java.io.File file = new java.io.File(this.file,name);
         return file.isFile();
     }
 
     public boolean hasDirectory(String name) {
-        session.getFileSystem().getSecurity().checkRead(getPrincipal(), this);
             
         java.io.File file = new java.io.File(this.file,name);
         return file.isDirectory();
     }
 
     public Node getChild(String name) throws FileNotFoundException {
-        session.getFileSystem().getSecurity().checkRead(getPrincipal(), this);
             
         Node node;
         java.io.File file = new java.io.File(super.file,name);
@@ -173,9 +164,9 @@ public class NativeDirectory extends NativeNode implements Directory{
             throw new FileNotFoundException("The file does not exist. [uri="+file.toURI()+"]");
         
         if(file.isDirectory())
-            node = new NativeDirectory(session, file);
+            node = new NativeDirectory(fs, file);
         else
-            node = new NativeFile(session, file);
+            node = new NativeFile(fs, file);
             
         return node;
     }

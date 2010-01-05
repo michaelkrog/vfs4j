@@ -39,9 +39,9 @@ public abstract class AbstractUseTest {
     public void testFileSystemAndRoot() {
         try {
             assertNotNull(filesystem.getName());
-            assertNotNull(filesystem.createSession(null).getRoot());
+            assertNotNull(filesystem.getRoot());
 
-            Directory root = filesystem.createSession(null).getRoot();
+            Directory root = filesystem.getRoot();
 
             assertEquals(null, root.getParent());
         } catch (FileNotFoundException ex) {
@@ -52,7 +52,7 @@ public abstract class AbstractUseTest {
     @Test
     public void testCreateAndDeleteDirectoryAndDirectory(){
         try {
-            Directory root = filesystem.createSession(null).getRoot();
+            Directory root = filesystem.getRoot();
             Directory testdata = root.getDirectory("testdata",true);
             assertNotNull(testdata);
             assertTrue(testdata.isDirectory());
@@ -85,7 +85,7 @@ public abstract class AbstractUseTest {
     public void testCreateManyFiles(){
         try {
             byte[] data = {56,78,45,90,78};
-            Directory root = filesystem.createSession(null).getRoot();
+            Directory root = filesystem.getRoot();
             int noOfFiles=10;
             Directory testdata = root.getDirectory("testdata",true);
             
@@ -119,7 +119,7 @@ public abstract class AbstractUseTest {
     @Test
     public void testDeleteRecursively(){
         try{
-            Directory root = filesystem.createSession(null).getRoot();
+            Directory root = filesystem.getRoot();
             Directory dir1 = root.createDirectory("dir1");
             dir1.createFile("file1");
             dir1.createFile("file2");

@@ -18,11 +18,11 @@ import org.javavfs.File;
  */
 public class CifsFile extends CifsNode implements File{
 
-    public CifsFile(CifsFileSystemSession filesystem, SmbFile file) {
+    public CifsFile(CifsFileSystem filesystem, SmbFile file) {
         super(filesystem, file);
     }
 
-    public CifsFile(CifsFileSystemSession filesystem, String url) throws MalformedURLException {
+    public CifsFile(CifsFileSystem filesystem, String url) throws MalformedURLException {
         super(filesystem, url);
     }
     

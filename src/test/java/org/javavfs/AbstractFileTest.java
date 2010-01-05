@@ -41,8 +41,7 @@ public class AbstractFileTest {
     private void clean() throws IOException{
         if(filesystem==null) return;
         
-        Principal p = filesystem.getSecurity().getGuestPrincipal();
-        List<Node> nodes = filesystem.createSession(p).getRoot().getChildren();
+        List<Node> nodes = filesystem.getRoot().getChildren();
         
         for(Node node:nodes){
             if(node.isDirectory()){
@@ -60,7 +59,7 @@ public class AbstractFileTest {
     public void testGetInputStream() throws Exception {
         if(filesystem==null) return;
         System.out.println("getInputStream");
-        Directory root = filesystem.createSession(null).getRoot();
+        Directory root = filesystem.getRoot();
         File tmp = root.getFile("tmp", true);
         
         int expResult = 123;
@@ -85,7 +84,7 @@ public class AbstractFileTest {
     public void testGetLength() throws Exception {
         if(filesystem==null) return;
         System.out.println("getLength");
-        Directory root = filesystem.createSession(null).getRoot();
+        Directory root = filesystem.getRoot();
         File tmp = root.getFile("tmp", true);
 
         byte[] data = new byte[]{1,2,3};

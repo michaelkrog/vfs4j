@@ -15,7 +15,7 @@ import jcifs.smb.SmbException;
 import org.javavfs.Directory;
 import org.javavfs.File;
 import org.javavfs.FileSystemSession;
-import org.javavfs.impl.cifs.CifsFileSystemSession;
+import org.javavfs.impl.cifs.CifsFileSystem;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

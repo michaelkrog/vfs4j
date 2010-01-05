@@ -12,6 +12,7 @@ import java.net.URI;
 import java.security.Principal;
 import java.util.Date;
 import org.javavfs.Directory;
+import org.javavfs.FileSystem;
 import org.javavfs.FileSystemSession;
 import org.javavfs.Node;
 import org.javavfs.Path;
@@ -22,19 +23,15 @@ import org.javavfs.Path;
  */
 public abstract class NativeNode implements Node{
 
-    public NativeNode(NativeFileSystemSession session, java.io.File file) {
-        this.session=session;
+    public NativeNode(NativeFileSystem fs, java.io.File file) {
+        this.fs=fs;
         this.file=file;
     }
     
-    protected NativeFileSystemSession session;
+    protected NativeFileSystem fs;
     protected java.io.File file;
 
-    protected Principal getPrincipal(){
-        return session.getPrincipal();
-    }
     private void deleteNonRecursive(File file) throws IOException{
-        session.getFileSystem().getSecurity().checkWrite(getPrincipal(), this);
         
         boolean deleted = file.delete();
         if(!deleted && file.isDirectory())
@@ -61,7 +58,7 @@ public abstract class NativeNode implements Node{
     
     public boolean isRoot(){
         try{
-            return session.getRoot().equals(this);
+            return fs.getRoot().equals(this);
         } catch(FileNotFoundException ex){
             
         }
@@ -80,9 +77,6 @@ public abstract class NativeNode implements Node{
     }
 
     public void moveTo(Directory newParent) throws IOException {
-        session.getFileSystem().getSecurity().checkWrite(getPrincipal(), this);
-        session.getFileSystem().getSecurity().checkWrite(getPrincipal(), newParent);
-        
         java.io.File newParentFile = new java.io.File(newParent.toUri());
         java.io.File newDestination = new java.io.File(newParentFile,file.getName());
         boolean moved = file.renameTo(newDestination);
@@ -91,8 +85,6 @@ public abstract class NativeNode implements Node{
     }
 
     public void moveTo(Directory newParent, String newName) throws IOException {
-        session.getFileSystem().getSecurity().checkWrite(getPrincipal(), this);
-        session.getFileSystem().getSecurity().checkWrite(getPrincipal(), newParent);
         
         java.io.File newParentFile = new java.io.File(newParent.toUri());
         java.io.File newDestination = new java.io.File(newParentFile,newName);
@@ -102,7 +94,6 @@ public abstract class NativeNode implements Node{
     }
 
     public void setName(String name) throws IOException {
-        session.getFileSystem().getSecurity().checkWrite(getPrincipal(), this);
         
         java.io.File newDestination = new java.io.File(file.getParentFile(),name);
         boolean moved = file.renameTo(newDestination);
@@ -117,11 +108,11 @@ public abstract class NativeNode implements Node{
     public Directory getParent() throws FileNotFoundException {
         if(isRoot())
             return null;
-        return new NativeDirectory(session, file.getParentFile());
+        return new NativeDirectory(fs, file.getParentFile());
     }
 
-    public FileSystemSession getFileSystem() {
-        return session;
+    public FileSystem getFileSystem() {
+        return fs;
     }
     
     public boolean isDirectory() {
@@ -143,7 +134,6 @@ public abstract class NativeNode implements Node{
     }
 
     public void setLastModified(Date date) {
-        session.getFileSystem().getSecurity().checkWrite(getPrincipal(), this);
         file.setLastModified(date.getTime());
     }
 
@@ -194,11 +184,11 @@ public abstract class NativeNode implements Node{
     }
 
     public boolean canRead() {
-        return session.getFileSystem().getSecurity().canRead(getPrincipal(), this) && file.canRead();
+        return file.canRead();
     }
 
     public boolean canWrite() {
-        return session.getFileSystem().getSecurity().canWrite(getPrincipal(), this) && file.canWrite();
+        return file.canWrite();
     }
 
     public String getBaseName() {

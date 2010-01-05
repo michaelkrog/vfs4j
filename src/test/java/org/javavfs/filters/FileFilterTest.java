@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Date;
 import org.javavfs.Directory;
+import org.javavfs.FileSystem;
 import org.javavfs.FileSystemSession;
 import org.javavfs.Node;
 import org.javavfs.Path;
@@ -56,7 +57,7 @@ public class FileFilterTest {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
-        public FileSystemSession getFileSystem() {
+        public FileSystem getFileSystem() {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 

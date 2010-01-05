@@ -29,11 +29,11 @@ import org.javavfs.impl.nativefs.NativeFile;
  */
 public class CifsDirectory extends CifsNode implements Directory{
 
-    public CifsDirectory(CifsFileSystemSession filesystem, SmbFile file) {
+    public CifsDirectory(CifsFileSystem filesystem, SmbFile file) {
         super(filesystem, file);
     }
 
-    public CifsDirectory(CifsFileSystemSession filesystem, String url) throws MalformedURLException {
+    public CifsDirectory(CifsFileSystem filesystem, String url) throws MalformedURLException {
         super(filesystem, url);
     }
 

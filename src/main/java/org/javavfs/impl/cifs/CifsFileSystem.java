@@ -23,13 +23,13 @@ import org.javavfs.security.Security;
  *
  * @author mzk
  */
-public class CifsFileSystemSession implements FileSystemSession {
+public class CifsFileSystem implements FileSystem {
 
-    public CifsFileSystemSession(String server, String share) throws MalformedURLException, SmbException {
+    public CifsFileSystem(String server, String share) throws MalformedURLException, SmbException {
         this("smb://"+server+"/"+share+"/");
     }
     
-    public CifsFileSystemSession(String url) throws MalformedURLException, SmbException {
+    public CifsFileSystem(String url) throws MalformedURLException, SmbException {
         SmbFile smbfile = new SmbFile(url);
         
         /*int type = smbfile.getType();
@@ -102,22 +102,6 @@ public class CifsFileSystemSession implements FileSystemSession {
         } catch(SmbException ex){
             return -1;
         }
-    }
-
-    public Security getSecurity() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void setSecurity(Security security) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public FileSystem getFileSystem() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public Principal getPrincipal() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public Node getNode(String path) throws FileNotFoundException {
