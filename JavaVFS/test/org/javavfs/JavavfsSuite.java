@@ -14,8 +14,7 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({org.javavfs.NativeFSFileTest.class,org.javavfs.NativeFSDirectoryTest.class,org.javavfs.NativeFSUseTest.class,
-                    org.javavfs.CIFSFileTest.class,org.javavfs.CIFSDirectoryTest.class,org.javavfs.CIFSUseTest.class,
-                    org.javavfs.QtFileTest.class,org.javavfs.QtDirectoryTest.class,org.javavfs.QtUseTest.class})
+                    org.javavfs.CIFSFileTest.class,org.javavfs.CIFSDirectoryTest.class,org.javavfs.CIFSUseTest.class})
 public class JavavfsSuite {
 
     public JavavfsSuite() {
