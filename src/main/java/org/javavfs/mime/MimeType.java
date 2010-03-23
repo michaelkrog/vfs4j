@@ -54,7 +54,7 @@ public class MimeType {
             type="application/octet-stream";
         return type;
     }
-
+   
     public static void add(String suffix, String mimetype){
         if(suffix==null || mimetype==null)
             return;

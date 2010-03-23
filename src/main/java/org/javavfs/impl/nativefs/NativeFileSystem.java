@@ -25,9 +25,15 @@ import org.javavfs.security.Security;
  */
 public class NativeFileSystem implements FileSystem {
     public NativeFileSystem(URI uri) throws IllegalArgumentException {
-        if(!uri.getScheme().equals("file"))
-            throw new IllegalArgumentException("Scheme not valid. Must be 'file' (fx: file:/mydir).");
-        
+        this(new File(uri));
+
+    }
+    
+    public NativeFileSystem(String path) throws IllegalArgumentException {
+        this(new File(path));
+    }
+    
+    public NativeFileSystem(File file) throws IllegalArgumentException {
         //Add info to infomap
         infomap.put(FileSystem.FSInfo_Name, "NativeFS");
         infomap.put(FileSystem.FSInfo_Description, "A filesystem based upon native files via the java.io package.");
@@ -38,11 +44,11 @@ public class NativeFileSystem implements FileSystem {
         infomap.put(FileSystem.FSInfo_HasSizeInformation, "false");
         
         
-        root = new File(uri);
+        root = file;
         if(!root.exists() || !root.isDirectory())
             throw new IllegalArgumentException("uri must point at a valid directory. [uri="+root.toString()+"]");
     }
-    
+
     File root;
     HashMap infomap = new HashMap();
     Security security = new NoSecurity();
