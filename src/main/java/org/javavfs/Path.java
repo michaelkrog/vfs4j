@@ -15,7 +15,12 @@ public class Path {
 
     public Path() {
     }
-    
+
+    public Path(Path parent, String child) {
+        this.levels.addAll(parent.levels);
+        this.levels.add(child);
+    }
+
     public Path(String path) {
         if(path.startsWith("/"))
             path=path.substring(1);
@@ -42,7 +47,13 @@ public class Path {
     public void removeLevel(int levelindex){
         levels.remove(levelindex);
     }
-    
+
+    public Path clone(){
+        Path clone = new Path();
+        clone.levels.addAll(this.levels);
+        return clone;
+    }
+
     public String getLeaf(){
         return levels.get(levels.size()-1);
     }

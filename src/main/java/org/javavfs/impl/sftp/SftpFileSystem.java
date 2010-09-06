@@ -5,17 +5,19 @@
 
 package org.javavfs.impl.sftp;
 
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
-import com.jcraft.jsch.UserInfo;
+import ch.ethz.ssh2.Connection;
+import ch.ethz.ssh2.ConnectionInfo;
+import ch.ethz.ssh2.SFTPv3Client;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.javavfs.Directory;
 import org.javavfs.FileSystem;
 import org.javavfs.Node;
+import org.javavfs.Path;
 
 /**
  *
@@ -23,7 +25,7 @@ import org.javavfs.Node;
  */
 public class SftpFileSystem implements FileSystem {
 
-    public SftpFileSystem(String host, int port, String user, String password) throws JSchException {
+    public SftpFileSystem(String host, int port, String user, String password) throws IOException {
         //Add info to infomap
         infomap.put(FileSystem.FSInfo_Name, "SftpFS");
         infomap.put(FileSystem.FSInfo_Description, "A filesystem based upon Sftp.");
@@ -33,9 +35,14 @@ public class SftpFileSystem implements FileSystem {
         infomap.put(FileSystem.FSInfo_HasFreeSpaceInformation, "false");
         infomap.put(FileSystem.FSInfo_HasSizeInformation, "false");
 
-        jSch = new JSch();
-        jSchSession = jSch.getSession(user, host, port);
-        jSchSession.setUserInfo(new SftpUserInfo(password));
+        Connection sshcon = new Connection(host,port);
+
+        ConnectionInfo ci = sshcon.connect();
+        if(sshcon.authenticateWithPassword(user, password))
+            throw new IOException("Unabble to authenticate.");
+
+        sftpc = new SFTPv3Client(sshcon);
+        
     }
 
 
@@ -44,15 +51,18 @@ public class SftpFileSystem implements FileSystem {
     }
 
     private HashMap infomap = new HashMap();
-    private JSch jSch = null;
-    private Session jSchSession = null;
-
+    protected SFTPv3Client sftpc = null;
+    
     public Map getInfo() {
         return infomap;
     }
 
     public Directory getRoot() throws FileNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            return new SftpDirectory(this, new Path(), null);
+        } catch (IOException ex) {
+            throw new FileNotFoundException(ex.getMessage());
+        }
     }
 
     public long getSize() {
@@ -64,7 +74,16 @@ public class SftpFileSystem implements FileSystem {
     }
 
     public Node getNode(String path) throws FileNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Path pathObject = new Path(path);
+        Node currentNode = getRoot();
+
+        for(int i=0;i<pathObject.getLevels();i++){
+            if(currentNode.isDirectory()){
+                currentNode = ((Directory)currentNode).getChild(pathObject.getLevel(i));
+            } else
+                throw new FileNotFoundException("The path '"+path+"' does not exist.");
+        }
+        return currentNode;
     }
 
 

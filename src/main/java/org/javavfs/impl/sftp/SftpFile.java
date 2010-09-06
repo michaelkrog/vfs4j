@@ -5,10 +5,14 @@
 
 package org.javavfs.impl.sftp;
 
+import ch.ethz.ssh2.SFTPv3DirectoryEntry;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.javavfs.File;
+import org.javavfs.Path;
 
 /**
  *
@@ -16,16 +20,22 @@ import org.javavfs.File;
  */
 public class SftpFile extends SftpNode implements File{
 
+    public SftpFile(SftpFileSystem filesystem, Path path, SFTPv3DirectoryEntry entry) throws IOException {
+        super(filesystem,path, entry);
+    }
+
+
     public InputStream getInputStream() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
+       return null;
     }
 
     public OutputStream getOutputStream() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
+            return null;
+        
     }
 
     public long getLength() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return 0;
     }
 
 }

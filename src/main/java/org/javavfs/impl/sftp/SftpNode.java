@@ -5,10 +5,12 @@
 
 package org.javavfs.impl.sftp;
 
+import ch.ethz.ssh2.SFTPv3DirectoryEntry;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Date;
+import java.util.Vector;
 import org.javavfs.Directory;
 import org.javavfs.FileSystem;
 import org.javavfs.Node;
@@ -20,52 +22,89 @@ import org.javavfs.Path;
  */
 public class SftpNode implements Node {
 
+    public SftpNode(SftpFileSystem fileSystem, Path path, SFTPv3DirectoryEntry entry) throws IOException {
+        this.fileSystem=fileSystem;
+        this.path=path;
+        this.entry=entry;
+    }
+
+    protected SftpFileSystem fileSystem;
+    protected Path path;
+    protected SFTPv3DirectoryEntry entry;
+
+    protected SFTPv3DirectoryEntry resolveChildEntry(String name) throws IOException{
+        Vector<SFTPv3DirectoryEntry> entries = fileSystem.sftpc.ls(new Path(path,name).toString());
+        if(entries.size()==0)
+            throw new FileNotFoundException("Unable to resolve child.");
+        return entries.elementAt(0);
+    }
+
     public void moveTo(Directory newParent) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        moveTo(newParent,getName());
     }
 
     public void moveTo(Directory newParent, String newName) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        fileSystem.sftpc.mv(path.toString(), new Path(newParent.getPath(),newName).toString());
     }
 
     public void setName(String name) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Path parentPath = path.clone();
+        parentPath.removeLevel(parentPath.getLevels()-1);
+        fileSystem.sftpc.mv(path.toString(),new Path(parentPath,name).toString());
     }
 
     public String getName() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return path.getLevels()==0?"":path.getLeaf();
     }
 
     public String getBaseName() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        String name = getName();
+        if(name.contains("."))
+            return name.substring(0,name.lastIndexOf("."));
+        else
+            return name;
     }
 
     public String getSuffix() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        String name = getName();
+        if(name.contains("."))
+            return name.substring(name.lastIndexOf(".")+1);
+        else
+            return null;
     }
 
     public Directory getParent() throws FileNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if(path.getLevels()==0)
+            return null;
+
+        try{
+            Path parentPath = path.clone();
+            parentPath.removeLevel(path.getLevels()-1);
+            //TODO FIX
+            return new SftpDirectory(fileSystem, parentPath,null);
+        } catch(IOException ex){
+            throw new FileNotFoundException("Unable to get parent. "+ex.getMessage());
+        }
     }
 
     public FileSystem getFileSystem() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return fileSystem;
     }
 
     public boolean isDirectory() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return entry.attributes.isDirectory();
     }
 
     public boolean isFile() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return entry.attributes.isRegularFile();
     }
 
     public boolean isHidden() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return getName().startsWith(".");
     }
 
     public Date getLastModified() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return new Date(entry.attributes.mtime);
     }
 
     public void setLastModified(Date date) {
@@ -77,7 +116,7 @@ public class SftpNode implements Node {
     }
 
     public void delete() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        fileSystem.sftpc.rm(path.toString());
     }
 
     public URI toUri() {
@@ -89,7 +128,7 @@ public class SftpNode implements Node {
     }
 
     public Path getPath() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return path;
     }
 
     public boolean canRead() {
