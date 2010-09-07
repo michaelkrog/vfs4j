@@ -22,8 +22,11 @@ import org.javavfs.Path;
  * @author krog
  */
 public class SftpFileSystem implements FileSystem {
-
     public SftpFileSystem(String host, int port, String user, String password) throws IOException {
+        this(host,port,user,password,60000);
+    }
+
+    public SftpFileSystem(String host, int port, String user, String password, int timeout) throws IOException {
         //Add info to infomap
         infomap.put(FileSystem.FSInfo_Name, "SftpFS");
         infomap.put(FileSystem.FSInfo_Description, "A filesystem based upon Sftp.");
@@ -34,7 +37,7 @@ public class SftpFileSystem implements FileSystem {
         infomap.put(FileSystem.FSInfo_HasSizeInformation, "false");
 
         Connection sshcon = new Connection(host,port);
-        ConnectionInfo ci = sshcon.connect();
+        ConnectionInfo ci = sshcon.connect(null, timeout, timeout);
         if(!sshcon.authenticateWithPassword(user, password)){
             sshcon.close();
             throw new IOException("Unable to authenticate.");

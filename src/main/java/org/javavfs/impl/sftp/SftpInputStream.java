@@ -53,7 +53,8 @@ public class SftpInputStream extends InputStream {
     @Override
     public int read(byte[] b, int off, int len) throws IOException {
         int bytesRead = sftpc.read(fileHandle, offset, b, off, len);
-        offset+=bytesRead;
+        if(bytesRead>0)
+            offset+=bytesRead;
         return bytesRead;
     }
 

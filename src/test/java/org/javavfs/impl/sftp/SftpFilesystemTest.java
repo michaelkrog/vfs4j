@@ -51,15 +51,15 @@ public class SftpFilesystemTest {
 
     @Test
     public void testList() throws Exception {
-        SftpFileSystem fileSystem = new SftpFileSystem("qash.dk", 22, "michael", "krogen");
+        SftpFileSystem fileSystem = new SftpFileSystem("appsrv291", 22, "systemwebtestmiljo", "wtest816");
 
-        Directory dir = (Directory)fileSystem.getNode("/home/michael");
+        Directory dir = (Directory)fileSystem.getNode("/D:");
         List<Node> children = dir.getChildren();
         for(Node node:children){
             System.out.println(node.getName()+(node.isDirectory()?"(DIR)":""));
         }
 
-        Node node = fileSystem.getNode("/home/michael/redeploy.sh");
+        Node node = fileSystem.getNode("/D:/webtek/t8/tx/deployments/xportalen/current/deployment_info.xml");
         System.out.println(node.getName()+(node.isDirectory()?"(DIR)":""));
         
         InputStream is = ((File)node).getInputStream();
