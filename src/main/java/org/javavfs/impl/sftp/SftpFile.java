@@ -9,8 +9,6 @@ import ch.ethz.ssh2.SFTPv3DirectoryEntry;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.javavfs.File;
 import org.javavfs.Path;
 
@@ -26,7 +24,7 @@ public class SftpFile extends SftpNode implements File{
 
 
     public InputStream getInputStream() throws IOException {
-       return null;
+       return new SftpInputStream(fileSystem.sftpc, entry, fileSystem.sftpc.openFileRO(path.toString()));
     }
 
     public OutputStream getOutputStream() throws IOException {
@@ -35,7 +33,7 @@ public class SftpFile extends SftpNode implements File{
     }
 
     public long getLength() throws IOException {
-        return 0;
+        return entry.attributes.size;
     }
 
 }

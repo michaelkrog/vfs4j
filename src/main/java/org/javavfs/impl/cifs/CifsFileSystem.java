@@ -107,4 +107,10 @@ public class CifsFileSystem implements FileSystem {
     public Node getNode(String path) throws FileNotFoundException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    public void close() throws IOException {
+        
+    }
+
+
 }

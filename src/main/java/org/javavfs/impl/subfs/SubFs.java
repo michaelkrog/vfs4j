@@ -6,6 +6,7 @@
 package org.javavfs.impl.subfs;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.Map;
 import org.javavfs.Directory;
@@ -60,6 +61,11 @@ public class SubFs implements FileSystem{
         }
         return currentNode;
     }
+
+    public void close() throws IOException {
+        fs.close();
+    }
+
 
 
 

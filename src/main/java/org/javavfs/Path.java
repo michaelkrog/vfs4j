@@ -67,10 +67,10 @@ public class Path {
     }
     
     public String toString(){
-        if(levels.size()==0)
-            return "/;";
+        if(levels.isEmpty())
+            return "/";
         
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         
         for(String level:levels){
             buf.append("/");

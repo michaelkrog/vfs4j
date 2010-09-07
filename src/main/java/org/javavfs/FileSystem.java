@@ -6,6 +6,7 @@
 package org.javavfs;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.Map;
 import org.javavfs.security.Security;
@@ -70,4 +71,6 @@ public interface FileSystem {
 
     
     public Node getNode(String path) throws FileNotFoundException;
+
+    public void close() throws IOException;
 }

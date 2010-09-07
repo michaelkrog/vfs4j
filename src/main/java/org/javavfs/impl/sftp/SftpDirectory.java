@@ -9,7 +9,11 @@ import ch.ethz.ssh2.SFTPv3DirectoryEntry;
 import ch.ethz.ssh2.SFTPv3FileHandle;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.javavfs.Directory;
 import org.javavfs.File;
 import org.javavfs.Node;
@@ -41,9 +45,7 @@ public class SftpDirectory extends SftpNode implements Directory{
         return new SftpFile(fileSystem, new Path(path,name), entry);
     }
 
-    public boolean isRoot() {
-        return path.getLevels()==0;
-    }
+    
 
     public boolean hasChild(String name) {
         try {
@@ -73,9 +75,34 @@ public class SftpDirectory extends SftpNode implements Directory{
         }
     }
 
-    public Node getChild(String name) throws FileNotFoundException {
-        //TODO
-        return null;
+    public Node getChild(final String name) throws FileNotFoundException {
+        try {
+            /*** THIS WOULD BE THE FASTEST METHOD BUT IT DOES NOT WORK ???? ***
+            SFTPv3DirectoryEntry childEntry = resolveChildEntry(name);
+            Path childPath = new Path(path,name);
+            if (childEntry.attributes.isDirectory()) {
+                return new SftpDirectory(fileSystem, childPath,childEntry);
+            }
+            if (childEntry.attributes.isRegularFile()) {
+                return new SftpFile(fileSystem, childPath, childEntry);
+            }
+            throw new IOException("Unable to find a file or directory with the given name.");
+             * */
+
+            List<Node> nodes = getChildren(new NodeFilter(){
+
+                public boolean accept(Node node) {
+                    return name.equals(node.getName());
+                }
+
+            });
+
+            if(nodes.isEmpty())
+                throw new FileNotFoundException("Unable to find node.[name="+name+"]");
+            return nodes.get(0);
+        } catch (IOException ex) {
+            throw new FileNotFoundException(ex.getMessage() + " (path="+new Path(path,name)+")");
+        }
     }
 
     public File getFile(String name) throws FileNotFoundException {
@@ -131,21 +158,72 @@ public class SftpDirectory extends SftpNode implements Directory{
     }
 
     public List<Node> getChildren(NodeFilter filter) {
-        //TODO
-        return null;
+        List<Node> nodes = new ArrayList<Node>();
+        try {
+            Vector<SFTPv3DirectoryEntry> entries = fileSystem.sftpc.ls(path.toString());
+            for(SFTPv3DirectoryEntry entry:entries){
+                Node node = null;
+                Path childPath = path.clone();
+                childPath.addLevel(entry.filename);
+                if(entry.attributes.isDirectory()){
+                    node = new SftpDirectory(fileSystem, childPath, entry);
+                }
+                if(entry.attributes.isRegularFile()){
+                    node = new SftpFile(fileSystem, childPath, entry);
+                }
+                if(filter==null || filter.accept(node))
+                    nodes.add(node);
+            }
+            return nodes;
+        } catch (IOException ex) {
+            return nodes;
+        }
         
     }
 
     public List<Directory> getDirectories(NodeFilter filter) {
-        //TODO
-        return null;
+        List<Directory> nodes = new ArrayList<Directory>();
+        try {
+            Vector<SFTPv3DirectoryEntry> entries = fileSystem.sftpc.ls(path.toString());
+            for(SFTPv3DirectoryEntry entry:entries){
+                Path childPath = path.clone();
+                childPath.addLevel(entry.filename);
+                if(entry.attributes.isRegularFile()){
+                    continue;
+                }
+
+                Directory dir = new SftpDirectory(fileSystem, childPath, entry);
+                if(filter==null || filter.accept(dir))
+                    nodes.add(dir);
+            }
+            return nodes;
+        } catch (IOException ex) {
+            return nodes;
+        }
+
         
     }
 
     public List<File> getFiles(NodeFilter filter) {
-        //TODO
-        return null;
-        
+        List<File> nodes = new ArrayList<File>();
+        try {
+            Vector<SFTPv3DirectoryEntry> entries = fileSystem.sftpc.ls(path.toString());
+            for(SFTPv3DirectoryEntry entry:entries){
+                Path childPath = path.clone();
+                childPath.addLevel(entry.filename);
+                if(entry.attributes.isDirectory()){
+                    continue;
+                }
+
+                File file = new SftpFile(fileSystem, childPath, entry);
+                if(filter==null || filter.accept(file))
+                    nodes.add(file);
+            }
+            return nodes;
+        } catch (IOException ex) {
+            return nodes;
+        }
+
     }
 
     public void delete(boolean recursive) throws IOException {

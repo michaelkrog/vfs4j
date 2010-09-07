@@ -33,8 +33,9 @@ public class SftpNode implements Node {
     protected SFTPv3DirectoryEntry entry;
 
     protected SFTPv3DirectoryEntry resolveChildEntry(String name) throws IOException{
-        Vector<SFTPv3DirectoryEntry> entries = fileSystem.sftpc.ls(new Path(path,name).toString());
-        if(entries.size()==0)
+        Path childPath = new Path(path,name);
+        Vector<SFTPv3DirectoryEntry> entries = fileSystem.sftpc.ls(childPath.toString());
+        if(entries.isEmpty())
             throw new FileNotFoundException("Unable to resolve child.");
         return entries.elementAt(0);
     }
@@ -91,12 +92,16 @@ public class SftpNode implements Node {
         return fileSystem;
     }
 
+    public boolean isRoot() {
+        return path.getLevels()==0;
+    }
+    
     public boolean isDirectory() {
-        return entry.attributes.isDirectory();
+        return isRoot()?true:entry.attributes.isDirectory();
     }
 
     public boolean isFile() {
-        return entry.attributes.isRegularFile();
+        return isRoot()?false:entry.attributes.isRegularFile();
     }
 
     public boolean isHidden() {
@@ -104,7 +109,7 @@ public class SftpNode implements Node {
     }
 
     public Date getLastModified() {
-        return new Date(entry.attributes.mtime);
+        return isRoot()?new Date(0):new Date(entry.attributes.mtime);
     }
 
     public void setLastModified(Date date) {

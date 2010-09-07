@@ -12,8 +12,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.javavfs.Directory;
 import org.javavfs.FileSystem;
 import org.javavfs.Node;
@@ -36,10 +34,11 @@ public class SftpFileSystem implements FileSystem {
         infomap.put(FileSystem.FSInfo_HasSizeInformation, "false");
 
         Connection sshcon = new Connection(host,port);
-
         ConnectionInfo ci = sshcon.connect();
-        if(sshcon.authenticateWithPassword(user, password))
-            throw new IOException("Unabble to authenticate.");
+        if(!sshcon.authenticateWithPassword(user, password)){
+            sshcon.close();
+            throw new IOException("Unable to authenticate.");
+        }
 
         sftpc = new SFTPv3Client(sshcon);
         
@@ -85,6 +84,11 @@ public class SftpFileSystem implements FileSystem {
         }
         return currentNode;
     }
+
+    public void close() throws IOException {
+        sftpc.close();
+    }
+
 
 
 }

@@ -7,6 +7,7 @@ package org.javavfs.impl.nativefs;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URI;
 import java.security.Principal;
 import java.util.HashMap;
@@ -112,5 +113,9 @@ public class NativeFileSystem implements FileSystem {
         }
         return currentNode;
     }
+
+    public void close() throws IOException {
+    }
+
 
 }
