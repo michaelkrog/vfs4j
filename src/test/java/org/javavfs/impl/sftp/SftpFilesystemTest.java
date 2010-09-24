@@ -51,7 +51,7 @@ public class SftpFilesystemTest {
 
     @Test
     public void testList() throws Exception {
-        SftpFileSystem fileSystem = new SftpFileSystem("appsrv291", 22, "systemwebtestmiljo", "wtest816");
+        /*SftpFileSystem fileSystem = new SftpFileSystem("appsrv291", 22, "systemwebtestmiljo", "wtest816");
 
         Directory dir = (Directory)fileSystem.getNode("/D:");
         List<Node> children = dir.getChildren();
@@ -68,7 +68,7 @@ public class SftpFilesystemTest {
             System.out.println(br.readLine());
         is.close();
 
-        fileSystem.close();
+        fileSystem.close();*/
     }
 
 }
