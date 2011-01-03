@@ -2,13 +2,13 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.javavfs</groupId>
   <packaging>jar</packaging>
-  <version>0.1</version>
+  <version>0.2-SNAPSHOT</version>
   <name>JavaVFS</name>
   <url>http://maven.apache.org</url>
   <scm>
-        <connection>scm:svn:https://javavfs.googlecode.com/svn/tags/javavfs-0.1</connection>
+        <connection>scm:svn:https://javavfs.googlecode.com/svn/trunk</connection>
     <!--developerConnection>scm:svn:https://127.0.0.1/svn/my-project</developerConnection-->
-        <url>http://javavfs.googlecode/svn/tags/javavfs-0.1</url>
+        <url>http://javavfs.googlecode/svn/trunk</url>
     </scm>
     <build>
         <plugins>
