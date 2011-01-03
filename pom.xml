@@ -1,11 +1,15 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.javavfs</groupId>
   <packaging>jar</packaging>
-  <version>1.0</version>
+  <version>0.1</version>
   <name>JavaVFS</name>
   <url>http://maven.apache.org</url>
+  <scm>
+        <connection>scm:svn:https://javavfs.googlecode.com/svn/tags/javavfs-0.1</connection>
+    <!--developerConnection>scm:svn:https://127.0.0.1/svn/my-project</developerConnection-->
+        <url>http://javavfs.googlecode/svn/tags/javavfs-0.1</url>
+    </scm>
     <build>
         <plugins>
             <plugin>
@@ -53,13 +57,19 @@
 	            <url>http://download.java.net/maven/2/</url>
 	        </repository>
 	    </repositories>
-	    <distributionManagement>
-	        <repository>
-	            <uniqueVersion>false</uniqueVersion>
-	            <id>googlecode</id>
-	            <url>svn:https://javavfs.googlecode.com/svn/repo</url>
-	        </repository>
-	    </distributionManagement>
+    <distributionManagement>
+
+        <repository>
+
+            <id>javavfs-repository</id>
+            <url>dav:https://javavfs.googlecode.com/svn/maven-repository</url>
+
+        </repository>
+        <snapshotRepository>
+            <id>spring-security-rpx-repository.snapshots</id>
+            <url>dav:https://javavfs.googlecode.com/svn/maven-repository-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
 
 
