@@ -13,7 +13,13 @@ import org.junit.BeforeClass;
 public class NativeFSUseTest extends AbstractUseTest{
 
     public NativeFSUseTest() {
-        super(new NativeFileSystem(new java.io.File(System.getProperty("user.dir"),"testdata").toURI()));
+        super(new NativeFileSystem(getFile().toURI()));
+    }
+    
+    private static java.io.File getFile() {
+        java.io.File file = new java.io.File(System.getProperty("user.dir"),"testdata");
+        file.mkdirs();
+        return file;
     }
 
     @BeforeClass
