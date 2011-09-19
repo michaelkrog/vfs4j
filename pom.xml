@@ -1,13 +1,19 @@
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>dk.apaq.vfs</groupId>
-  <packaging>jar</packaging>
-  <version>0.2-SNAPSHOT</version>
-  <url>http://maven.apache.org</url>
-  <scm>
-        <connection>scm:svn:https://javavfs.googlecode.com/svn/trunk</connection>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>dk.apaq.vfs</groupId>
+    <packaging>jar</packaging>
+    <version>1.0</version>
+    <description>A Virtual Filesystem for Java.</description>
+    <url>http://javavfs.googlecode.com</url>
+    <issueManagement>
+        <system>Google Code</system>
+        <url>http://code.google.com/p/javavfs/issues/list</url>
+    </issueManagement>
+    <scm>
+        <connection>scm:svn:https://javavfs.googlecode.com/svn/tags/javavfs-1.0</connection>
     <!--developerConnection>scm:svn:https://127.0.0.1/svn/my-project</developerConnection-->
-        <url>http://javavfs.googlecode/svn/trunk</url>
+        <url>http://javavfs.googlecode/svn/tags/javavfs-1.0</url>
     </scm>
     <build>
         <plugins>
@@ -20,55 +26,103 @@
                     <target>1.5</target>
                 </configuration>
             </plugin>
+       
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <preparationGoals>clean install</preparationGoals>
+                </configuration>
+            </plugin>
         </plugins>
-        	        <extensions>
-	            <extension>
-	                <groupId>org.jvnet.wagon-svn</groupId>
-	                <artifactId>wagon-svn</artifactId>
-	                <version>1.8</version>
-	            </extension>
-	        </extensions>
+        	      
     </build>
+    
     <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.7</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.samba.jcifs</groupId>
-      <artifactId>jcifs</artifactId>
-      <version>1.2.19</version>
-    </dependency>
-    <dependency>
-    <groupId>ch.ethz.ganymed</groupId>
-    <artifactId>ganymed-ssh2</artifactId>
-    <version>build210</version>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.7</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.samba.jcifs</groupId>
+            <artifactId>jcifs</artifactId>
+            <version>1.2.19</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.ethz.ganymed</groupId>
+            <artifactId>ganymed-ssh2</artifactId>
+            <version>build210</version>
 
-</dependency>
+        </dependency>
     </dependencies>
     <artifactId>javavfs</artifactId>
-	    <repositories>
-	        <repository>
-	            <id>maven2-repository.dev.java.net</id>
-	            <name>Java.net Repository for Maven</name>
-	            <url>http://download.java.net/maven/2/</url>
-	        </repository>
-	    </repositories>
-    <distributionManagement>
-
+    <repositories>
         <repository>
-
-            <id>javavfs-repository</id>
-            <url>dav:https://javavfs.googlecode.com/svn/maven-repository</url>
-
+            <id>maven2-repository.dev.java.net</id>
+            <name>Java.net Repository for Maven</name>
+            <url>http://download.java.net/maven/2/</url>
         </repository>
+    </repositories>
+    <distributionManagement>
         <snapshotRepository>
-            <id>spring-security-rpx-repository.snapshots</id>
-            <url>dav:https://javavfs.googlecode.com/svn/maven-repository-snapshots/</url>
+            <id>sonatype-snapshot</id>
+            <name>Sonatype snapshots</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
+        <repository>
+            <id>sonatype-release</id>
+            <name>Sonatype release</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
     </distributionManagement>
+    
+    <profiles>
+        <profile>
+            <id>release-sign-artifacts</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    
+    <developers>
+        <developer>
+            <name>Michael Krog</name>
+            <organization>Apaq</organization>
+            <email>mic@apaq.dk</email>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>GNU Affero General Public License</name>
+            <url>http://www.gnu.org/licenses/agpl-3.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    
     <name>JavaVfs</name>
 </project>
 
