@@ -1,9 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.javavfs</groupId>
+  <groupId>dk.apaq.vfs</groupId>
   <packaging>jar</packaging>
   <version>0.2-SNAPSHOT</version>
-  <name>JavaVFS</name>
   <url>http://maven.apache.org</url>
   <scm>
         <connection>scm:svn:https://javavfs.googlecode.com/svn/trunk</connection>
@@ -46,7 +45,7 @@
     <groupId>ch.ethz.ganymed</groupId>
     <artifactId>ganymed-ssh2</artifactId>
     <version>build210</version>
-    
+
 </dependency>
     </dependencies>
     <artifactId>javavfs</artifactId>
@@ -70,6 +69,7 @@
             <url>dav:https://javavfs.googlecode.com/svn/maven-repository-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
+    <name>JavaVfs</name>
 </project>
 
 
