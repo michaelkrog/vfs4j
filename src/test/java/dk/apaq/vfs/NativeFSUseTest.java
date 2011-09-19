@@ -29,6 +29,7 @@ public class NativeFSUseTest extends AbstractUseTest{
 
     @AfterClass
     public static void tearDownClass() throws Exception {
+        getFile().delete();
     }
 
     @Before
