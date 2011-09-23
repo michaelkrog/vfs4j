@@ -101,4 +101,14 @@ public class AbstractFileTest {
         
     }
 
+     @Test
+    public void testGetPath() throws Exception {
+         if(filesystem==null) return;
+         Directory root = filesystem.getRoot();
+         File tmp = root.getFile("tmp", true);
+         String path = tmp.getPath().toString();
+         assertEquals("/tmp", path);
+     }
+
+
 }
