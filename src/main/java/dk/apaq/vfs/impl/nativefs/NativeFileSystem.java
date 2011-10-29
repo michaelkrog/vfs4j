@@ -10,8 +10,6 @@ import dk.apaq.vfs.Directory;
 import dk.apaq.vfs.FileSystem;
 import dk.apaq.vfs.Node;
 import dk.apaq.vfs.Path;
-import dk.apaq.vfs.security.NoSecurity;
-import dk.apaq.vfs.security.Security;
 
 /**
  *
@@ -33,9 +31,8 @@ public class NativeFileSystem implements FileSystem {
         infomap.put(FileSystem.FSInfo_Description, "A filesystem based upon native files via the java.io package.");
         infomap.put(FileSystem.FSInfo_Version, "0.1.0");
         
-        //Java version < 1.6
-        infomap.put(FileSystem.FSInfo_HasFreeSpaceInformation, "false");
-        infomap.put(FileSystem.FSInfo_HasSizeInformation, "false");
+        infomap.put(FileSystem.FSInfo_HasFreeSpaceInformation, "true");
+        infomap.put(FileSystem.FSInfo_HasSizeInformation, "true");
         
         
         root = file;
@@ -45,53 +42,25 @@ public class NativeFileSystem implements FileSystem {
 
     File root;
     HashMap infomap = new HashMap();
-    Security security = new NoSecurity();
-
-    /*public File getRoot() {
-        return root;
-    }*/
-    
     
     public Map getInfo() {
         return infomap;
     }
 
-    /*public Security getSecurity() {
-        return security;
-    }
-
-    public void setSecurity(Security security) {
-        this.security=security;
-    }*/
-
     public String getName() {
         return "NativeFS("+root.toURI()+")";
     }
-
-
-
-    /*public FileSystemSession createSession(Principal principal) {
-        return new NativeFileSystemSession(this, principal);
-    }*/
 
     public Directory getRoot() throws FileNotFoundException {
         return new NativeDirectory(this, root);
     }
 
     public long getSize() {
-        //Java version < 1.6
-        return -1;
-
-        //Java version 1.6+
-        //return root.innerFile.getTotalSpace();
+        return root.getTotalSpace();
     }
 
     public long getFreeSpace() {
-        //Java version < 1.6
-        return -1;
-
-        //Java version 1.6+
-        //return root.innerFile.getFreeSpace();
+        return root.getFreeSpace();
     }
 
     public Node getNode(String path) throws FileNotFoundException {

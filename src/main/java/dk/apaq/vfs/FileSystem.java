@@ -2,9 +2,7 @@ package dk.apaq.vfs;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.security.Principal;
 import java.util.Map;
-import dk.apaq.vfs.security.Security;
 import java.io.Serializable;
 
 /**
