@@ -9,7 +9,9 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({NativeFSFileTest.class,NativeFSDirectoryTest.class,NativeFSUseTest.class,
-                    CIFSFileTest.class,CIFSDirectoryTest.class,CIFSUseTest.class})
+                    CIFSFileTest.class,CIFSDirectoryTest.class,CIFSUseTest.class,
+                    RamFSFileTest.class, RamFSDirectoryTest.class, RamFSUseTest.class,
+                    SubFsFileTest.class, SubFsDirectoryTest.class, SubFsUseTest.class})
 public class JavavfsSuite {
 
     public JavavfsSuite() {

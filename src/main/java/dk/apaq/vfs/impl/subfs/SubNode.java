@@ -15,13 +15,15 @@ import dk.apaq.vfs.Path;
  */
 public class SubNode implements Node{
 
-    public SubNode(FileSystem fs, Node subbedNode) {
+    public SubNode(FileSystem fs, SubDirectory parent, Node subbedNode) {
         this.fs=fs;
         this.subbedNode=subbedNode;
+        this.parent = parent;
     }
 
     protected FileSystem fs;
     private Node subbedNode;
+    private SubDirectory parent;
 
     public void moveTo(Directory newParent) throws IOException {
         subbedNode.moveTo(newParent);
@@ -48,7 +50,7 @@ public class SubNode implements Node{
     }
 
     public Directory getParent() throws FileNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return parent;
     }
 
     public FileSystem getFileSystem() {
@@ -80,6 +82,9 @@ public class SubNode implements Node{
     }
 
     public void delete() throws IOException {
+        if(this instanceof SubDirectory && ((SubDirectory)this).isRoot()) {
+            throw new IOException("Cannot delete root.");
+        }
         subbedNode.delete();
     }
 
@@ -87,8 +92,17 @@ public class SubNode implements Node{
         return subbedNode.toUri();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if(o instanceof Node) {
+            return equals((Node)o);
+        }
+        return super.equals(o);
+    }
+
+    
     public boolean equals(Node node) {
-        return subbedNode.equals(node);
+        return subbedNode.equals(((SubNode)node).subbedNode);
     }
 
     public Path getPath() {
@@ -101,7 +115,7 @@ public class SubNode implements Node{
                 node=getParent();
             } catch(FileNotFoundException ex){
                 //if this happens, the parent directy has been removed.
-                //Actually - this file does not exist anymote.
+                //Actually - this file does not exist anymore.
                 throw new RuntimeException("Cannot retrieve parent directory.");
             }
         }

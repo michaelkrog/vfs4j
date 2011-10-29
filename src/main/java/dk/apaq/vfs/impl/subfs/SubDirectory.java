@@ -23,24 +23,24 @@ import dk.apaq.vfs.NodeFilter;
  */
 public class SubDirectory extends SubNode implements Directory{
 
-    public SubDirectory(FileSystem fs, Directory subbedDirectory) {
-        super(fs, subbedDirectory);
+    public SubDirectory(FileSystem fs, SubDirectory parent, Directory subbedDirectory) {
+        super(fs, parent, subbedDirectory);
         this.subbedDirectory=subbedDirectory;
     }
 
     private Directory subbedDirectory;
 
     public Directory createDirectory(String name) throws IOException {
-        return subbedDirectory.createDirectory(name);
+        return new SubDirectory(fs, this, subbedDirectory.createDirectory(name));
     }
 
     public File createFile(String name) throws IOException {
-        return subbedDirectory.createFile(name);
+        return new SubFile(fs, this, subbedDirectory.createFile(name));
     }
 
     public boolean isRoot() {
         try {
-            return this.equals(fs.getRoot());
+            return getParent() == null;
         } catch (FileNotFoundException ex) {
             return false;
         }
@@ -61,25 +61,25 @@ public class SubDirectory extends SubNode implements Directory{
     public Node getChild(String name) throws FileNotFoundException {
         Node node = subbedDirectory.getChild(name);
         if(node.isDirectory())
-            return new SubDirectory(fs, (Directory)node);
+            return new SubDirectory(fs, this, (Directory)node);
         else
-            return new SubFile(fs, (File)node);
+            return new SubFile(fs, this, (File)node);
     }
 
     public File getFile(String name) throws FileNotFoundException {
-        return new SubFile(fs, subbedDirectory.getFile(name));
+        return new SubFile(fs, this, subbedDirectory.getFile(name));
     }
 
     public Directory getDirectory(String name) throws FileNotFoundException {
-        return new SubDirectory(fs, subbedDirectory.getDirectory(name));
+        return new SubDirectory(fs, this, subbedDirectory.getDirectory(name));
     }
 
     public File getFile(String name, boolean createIfNeeded) throws FileNotFoundException, IOException {
-            return new SubFile(fs, subbedDirectory.getFile(name,createIfNeeded));
+            return new SubFile(fs, this, subbedDirectory.getFile(name,createIfNeeded));
     }
 
     public Directory getDirectory(String name, boolean createIfNeeded) throws FileNotFoundException, IOException {
-        return new SubDirectory(fs, subbedDirectory.getDirectory(name,createIfNeeded));
+        return new SubDirectory(fs, this, subbedDirectory.getDirectory(name,createIfNeeded));
     }
 
     public List<Node> getChildren() {
@@ -99,7 +99,7 @@ public class SubDirectory extends SubNode implements Directory{
         List<Node> subbedList = new ArrayList<Node>();
 
         for(Node node:childList){
-            subbedList.add(node.isDirectory()?new SubDirectory(fs, (Directory)node):new SubFile(fs,(File)node));
+            subbedList.add(node.isDirectory()?new SubDirectory(fs, this, (Directory)node):new SubFile(fs, this,(File)node));
         }
         return subbedList;
     }
@@ -109,7 +109,7 @@ public class SubDirectory extends SubNode implements Directory{
         List<Directory> subbedList = new ArrayList<Directory>();
 
         for(Directory node:childList){
-            subbedList.add(new SubDirectory(fs, node));
+            subbedList.add(new SubDirectory(fs, this, node));
         }
         return subbedList;
     }
@@ -119,12 +119,15 @@ public class SubDirectory extends SubNode implements Directory{
         List<File> subbedList = new ArrayList<File>();
 
         for(File node:childList){
-            subbedList.add(new SubFile(fs, node));
+            subbedList.add(new SubFile(fs, this, node));
         }
         return subbedList;
     }
 
     public void delete(boolean recursive) throws IOException {
+        if(isRoot()) {
+            throw new IOException("Cannot delete root.");
+        }
         subbedDirectory.delete(recursive);
     }
 

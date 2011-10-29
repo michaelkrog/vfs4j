@@ -16,7 +16,8 @@ import dk.apaq.vfs.Path;
 public class SubFs implements FileSystem{
 
     public SubFs(FileSystem fs, Directory root) {
-        this.root = root;
+        this.fs =fs;
+        this.root = new SubDirectory(this, null, root);
     }
 
     private Directory root;

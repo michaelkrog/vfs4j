@@ -17,8 +17,8 @@ import dk.apaq.vfs.FileSystem;
  */
 public class SubFile extends SubNode implements File{
 
-    public SubFile(FileSystem fs, File subbedFile) {
-        super(fs, subbedFile);
+    public SubFile(FileSystem fs, SubDirectory parent, File subbedFile) {
+        super(fs, parent, subbedFile);
         this.subbedFile=subbedFile;
     }
 
