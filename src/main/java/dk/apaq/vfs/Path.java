@@ -1,17 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package dk.apaq.vfs;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author michael
  */
-public class Path {
+public class Path implements Serializable {
 
     public Path() {
     }

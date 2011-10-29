@@ -1,23 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package dk.apaq.vfs.impl.cifs;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 import jcifs.smb.SmbException;
 import jcifs.smb.SmbFile;
 import dk.apaq.vfs.Directory;
 import dk.apaq.vfs.FileSystem;
-import dk.apaq.vfs.FileSystemSession;
 import dk.apaq.vfs.Node;
-import dk.apaq.vfs.security.Security;
 
 /**
  *

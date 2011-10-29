@@ -112,7 +112,7 @@ public class SubNode implements Node{
         while(!node.isDirectory() || !((Directory)node).isRoot()){
             path.addLevel(0, node.getName());
             try{
-                node=getParent();
+                node=node.getParent();
             } catch(FileNotFoundException ex){
                 //if this happens, the parent directy has been removed.
                 //Actually - this file does not exist anymore.

@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package dk.apaq.vfs;
 
 import java.io.FileNotFoundException;
@@ -10,12 +5,13 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.Map;
 import dk.apaq.vfs.security.Security;
+import java.io.Serializable;
 
 /**
  *
  * @author michael
  */
-public interface FileSystem {
+public interface FileSystem extends Serializable {
     public static final String FSInfo_Name="FSInfo_Name";
     public static final String FSInfo_Description="FSInfo_Description";
     public static final String FSInfo_Version="FSInfo_Version";

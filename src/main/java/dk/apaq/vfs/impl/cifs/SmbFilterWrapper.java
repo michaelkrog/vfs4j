@@ -1,14 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package dk.apaq.vfs.impl.cifs;
 
 import jcifs.smb.SmbException;
 import jcifs.smb.SmbFile;
 import jcifs.smb.SmbFileFilter;
-import dk.apaq.vfs.FileSystemSession;
 import dk.apaq.vfs.Node;
 import dk.apaq.vfs.NodeFilter;
 

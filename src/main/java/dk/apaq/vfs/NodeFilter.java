@@ -1,15 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package dk.apaq.vfs;
+
+import java.io.Serializable;
 
 /**
  *
  * @author mzk
  */
-public interface NodeFilter {
+public interface NodeFilter extends Serializable {
     /**
      * Called to check if the filter accepts the node.
      * @param node The node to perform the check on.

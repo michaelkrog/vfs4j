@@ -1,12 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package dk.apaq.vfs;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URI;
 import java.util.Date;
 
@@ -14,7 +10,7 @@ import java.util.Date;
  *
  * @author mzk
  */
-public interface Node extends Comparable {
+public interface Node extends Comparable, Serializable {
 
     /**
      * Moves this node to a new directory.
