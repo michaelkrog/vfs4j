@@ -11,7 +11,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({NativeFSFileTest.class,NativeFSDirectoryTest.class,NativeFSUseTest.class,
                     CIFSFileTest.class,CIFSDirectoryTest.class,CIFSUseTest.class,
                     RamFSFileTest.class, RamFSDirectoryTest.class, RamFSUseTest.class,
-                    SubFsFileTest.class, SubFsDirectoryTest.class, SubFsUseTest.class})
+                    SubFsFileTest.class, SubFsDirectoryTest.class, SubFsUseTest.class,
+                    LayeredFsFileTest.class, LayeredFsDirectoryTest.class, LayeredFsUseTest.class})
 public class JavavfsSuite {
 
     public JavavfsSuite() {
