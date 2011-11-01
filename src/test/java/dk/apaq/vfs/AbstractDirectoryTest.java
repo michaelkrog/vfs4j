@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package dk.apaq.vfs;
 
 /**
@@ -10,25 +5,28 @@ package dk.apaq.vfs;
  * @author mzk
  */
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URI;
 import java.util.Collections;
 import java.util.List;
 import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public abstract class AbstractDirectoryTest {
 
+    FileSystem filesystem;
+    
     public AbstractDirectoryTest(FileSystem filesystem) {
         this.filesystem=filesystem;
     }
 
-    FileSystem filesystem;
+    public AbstractDirectoryTest() {
+    }
+    
+    public void setFileSystem(FileSystem filesystem) {
+        this.filesystem = filesystem;
+    }
+    
     
      @After
     public void tearDown() throws IOException {

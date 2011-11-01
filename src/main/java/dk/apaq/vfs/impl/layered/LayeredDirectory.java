@@ -184,8 +184,9 @@ public class LayeredDirectory extends LayeredNode implements Directory {
                     if (existingNode.getName().equals(node.getName())) {
                         break;
                     }
-                    children.add(node);
                 }
+                children.add(node);
+                
             }
         }
 
@@ -209,8 +210,9 @@ public class LayeredDirectory extends LayeredNode implements Directory {
                     if (existingNode.getName().equals(node.getName())) {
                         break;
                     }
-                    children.add(node);
                 }
+                children.add(node);
+                
             }
         }
 
@@ -230,8 +232,9 @@ public class LayeredDirectory extends LayeredNode implements Directory {
                     if (existingNode.getName().equals(node.getName())) {
                         break;
                     }
-                    children.add(node);
                 }
+                children.add(node);
+                
             }
         }
 
