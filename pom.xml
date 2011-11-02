@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>dk.apaq.vfs</groupId>
     <packaging>jar</packaging>
-    <version>1.0.4</version>
+    <version>1.0.5-SNAPSHOT</version>
     <description>A Virtual Filesystem for Java.</description>
     <url>http://javavfs.googlecode.com</url>
     <issueManagement>
@@ -11,9 +11,9 @@
         <url>http://code.google.com/p/javavfs/issues/list</url>
     </issueManagement>
     <scm>
-        <connection>scm:svn:https://javavfs.googlecode.com/svn/tags/javavfs-1.0.4</connection>
+        <connection>scm:svn:https://javavfs.googlecode.com/svn/trunk</connection>
     <!--developerConnection>scm:svn:https://127.0.0.1/svn/my-project</developerConnection-->
-        <url>http://javavfs.googlecode/svn/tags/javavfs-1.0.4</url>
+        <url>http://javavfs.googlecode/svn/trunk</url>
     </scm>
     <build>
         <plugins>
