@@ -1,7 +1,7 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>dk.apaq.vfs</groupId>
+    <groupId>dk.apaq</groupId>
     <packaging>jar</packaging>
     <version>1.0.5-SNAPSHOT</version>
     <description>A Virtual Filesystem for Java.</description>
@@ -57,7 +57,6 @@
 
         </dependency>
     </dependencies>
-    <artifactId>javavfs</artifactId>
     <repositories>
         <repository>
             <id>maven2-repository.dev.java.net</id>
@@ -122,8 +121,8 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-    
-    <name>JavaVfs</name>
+    <artifactId>vfs4j</artifactId>
+    <name>vfs4j</name>
 </project>
 
 
