@@ -21,7 +21,7 @@ public class MimeType {
 
         mimetypes=new Properties();
         try {
-            mimetypes.load(MimeType.class.getResourceAsStream("mimetypes.properties"));
+            mimetypes.load(MimeType.class.getResourceAsStream("/mimetypes.properties"));
         } catch (IOException ex) {
             Logger.getLogger(MimeType.class.getName()).log(Level.SEVERE, null, ex);
         }
