@@ -4,11 +4,11 @@
     <parent>
         <artifactId>vfs4j</artifactId>
         <groupId>dk.apaq</groupId>
-        <version>1.0.5</version>
+        <version>1.0.6-SNAPSHOT</version>
     </parent>
     <groupId>dk.apaq</groupId>
     <artifactId>vfs4j-sftp</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.6-SNAPSHOT</version>
     <name>vfs4j-sftp</name>
     <url>http://maven.apache.org</url>
     <dependencies>

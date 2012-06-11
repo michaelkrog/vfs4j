@@ -4,11 +4,11 @@
   <parent>
     <artifactId>vfs4j</artifactId>
     <groupId>dk.apaq</groupId>
-    <version>1.0.5</version>
+    <version>1.0.6-SNAPSHOT</version>
   </parent>
   <groupId>dk.apaq</groupId>
   <artifactId>vfs4j-cifs</artifactId>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <name>vfs4j-cifs</name>
   <url>http://maven.apache.org</url>
   <dependencies>
@@ -20,12 +20,12 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>vfs4j-core</artifactId>
-      <version>1.0.5</version>
+      <version>1.0.6-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>vfs4j-test</artifactId>
-      <version>1.0.5</version>
+      <version>1.0.6-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

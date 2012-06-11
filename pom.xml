@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>dk.apaq</groupId>
     <packaging>pom</packaging>
-    <version>1.0.5</version>
+    <version>1.0.6-SNAPSHOT</version>
     <description>A Virtual Filesystem for Java.</description>
     <url>http://javavfs.googlecode.com</url>
     <issueManagement>
