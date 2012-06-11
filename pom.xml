@@ -7,14 +7,16 @@
     <description>A Virtual Filesystem for Java.</description>
     <url>http://javavfs.googlecode.com</url>
     <issueManagement>
-        <system>Google Code</system>
-        <url>http://code.google.com/p/javavfs/issues/list</url>
+        <system>Github</system>
+        <url>https://github.com/michaelkrog/vfs4j/issues</url>
     </issueManagement>
+    <inceptionYear>2011</inceptionYear>
     <scm>
-        <connection>scm:svn:https://javavfs.googlecode.com/svn/trunk</connection>
-    <!--developerConnection>scm:svn:https://127.0.0.1/svn/my-project</developerConnection-->
-        <url>http://javavfs.googlecode/svn/trunk</url>
+        <connection>scm:git:git@github.com:michaelkrog/vfs4j.git</connection>
+        <url>scm:git:git@github.com:michaelkrog/vfs4j.git</url>
+        <developerConnection>scm:git:git@github.com:michaelkrog/vfs4j.git</developerConnection>
     </scm>
+  
     <build>
         <plugins>
             <plugin>
