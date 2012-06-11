@@ -12,29 +12,7 @@ import java.io.OutputStream;
  */
 public class RamFile extends RamNode implements File {
 
-    private byte[] buffer=new byte[0];
-
-
-    private class BufferUpdatingOutputStream extends OutputStream {
-
-        private final ByteArrayOutputStream wrapped;
-
-        public BufferUpdatingOutputStream(ByteArrayOutputStream wrapped) {
-            this.wrapped = wrapped;
-        }
-
-       @Override
-        public void write(int b) throws IOException {
-            wrapped.write(b);
-        }
-
-        @Override
-        public void close() throws IOException {
-            super.close();
-            buffer = wrapped.toByteArray();
-        }
-
-    }
+    private ByteArrayOutputStream output = new ByteArrayOutputStream();
 
     public RamFile(RamDirectory parent, String name) {
         super(parent, name);
@@ -42,15 +20,15 @@ public class RamFile extends RamNode implements File {
 
     
     public InputStream getInputStream() throws IOException {
-        return new ByteArrayInputStream(buffer);
+        return new ByteArrayInputStream(output.toByteArray());
     }
 
     public OutputStream getOutputStream() throws IOException {
-        return new BufferUpdatingOutputStream(new ByteArrayOutputStream());
+        return output;
     }
 
     public long getLength() throws IOException {
-        return buffer.length;
+        return output.size();
     }
 
 }
