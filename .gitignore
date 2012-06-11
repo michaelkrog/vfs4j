@@ -4,3 +4,12 @@
 *.jar
 *.war
 *.ear
+/target/
+/vfs4j-cifs/target/
+/vfs4j-core/target/
+/vfs4j-sftp/target/
+/vfs4j-test/target/
+/vfs4j-layered/target/
+/vfs4j-ram/target/
+/vfs4j-nativefs/target/
+/vfs4j-subfs/target/
